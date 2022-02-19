@@ -28,7 +28,7 @@ Once installed.  Use the instructions with 'nvm' to install node for your system
 Clone this repository locally:
 
 ``` bash
-git clone https://github.com/maximegris/angular-electron.git
+git clone https://github.com/thstave/NAPCOM.git
 ```
 
 Install dependencies with npm:
