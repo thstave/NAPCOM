@@ -1,0 +1,62 @@
+@use 'node_modules/@angular/material/index' as mat;
+@use 'src/app/main/main-app/main-app.component-theme' as main-app;
+@use 'src/app/gui/json-table-data/json-table.component-theme' as json-table;
+@use 'src/app/gui/single-table-content/single-table-content.component-theme' as single-table;
+@use 'src/app/gui/multi-table-content/multi-table-content.component-theme' as multi-table;
+@use 'src/app/home/home.component-theme' as home;
+@use 'src/styles/styles-theme' as global;
+//@use 'app/gui/dialogs/load-new/data-file-config/data-file-config.component-theme' as data-file-config;
+
+@import 'node_modules/@angular/material/theming';
+@include mat-core();
+
+// mat-palette accepts $palette-name, main, lighter and darker variants
+$app-theme-primary: mat.define-palette(mat.$green-palette, 700, 500, 900);
+$app-theme-accent: mat.define-palette(mat.$pink-palette);
+
+
+// Color Palette for the application
+$app-theme: mat.define-light-theme((
+  color: (
+    primary: $app-theme-primary,
+    accent: $app-theme-accent
+  ),
+  typography: mat.define-typography-config(
+    $font-family: serif,
+  )
+));
+
+// Color palette for the nav bar
+$nav-theme-primary: mat.define-palette(mat.$green-palette, 700, 500, 900);
+$nav-theme-accent: mat.define-palette(mat.$pink-palette);
+
+$nav-theme: mat.define-dark-theme((
+  color: (
+    primary: $nav-theme-primary,
+    accent: $nav-theme-accent
+  )
+));
+
+// Color palette for the editing (just reversing the color palette)
+$edt-theme-primary: mat.define-palette(mat.$green-palette, 700, 500, 900);
+$edt-theme-accent: mat.define-palette(mat.$pink-palette);
+
+$edt-theme: mat.define-light-theme((
+  color: (
+    primary: $edt-theme-primary,
+    accent: $edt-theme-accent
+  )
+));
+
+@include global.theme($nav-theme);
+@include mat.all-component-themes($nav-theme);
+@include main-app.theme($app-theme);
+@include json-table.theme($nav-theme,$edt-theme);
+@include single-table.theme($nav-theme);
+@include multi-table.theme($nav-theme);
+@include home.theme($nav-theme);
+//@include data-file-config.theme($nav-theme);
+
+
+
+

@@ -1,0 +1,32 @@
+<a mat-list-item class="textAppearanceHeadline5 mat-elevation-z4" (click)="setAction(action.OpenDialag)"> Home </a>
+
+<mat-divider *ngIf="subMenuOpened" [inset]="true" class="mt-4 mb-2"></mat-divider>
+
+<ng-container *ngIf="hasData()">
+<a mat-list-item (click)="toggleSubMenu()" class="textAppearanceHeadline5 mat-elevation-z8">
+  Edit Data
+  <mat-icon *ngIf="!subMenuOpened">chevron_right</mat-icon>
+  <mat-icon *ngIf="subMenuOpened">expand_more</mat-icon>
+</a>
+
+<mat-nav-list class="sidenav-submenu" *ngIf="subMenuOpened">
+  <a mat-list-item class="textAppearanceHeadline5 mat-elevation-z4 m-lg-2" (click)="setAction(action.HPMSData)"> HPMS Data </a>
+  <a mat-list-item class="textAppearanceHeadline5 mat-elevation-z4 m-lg-2" (click)="setAction(action.StatesRegions)"> States-Regions </a>
+  <a mat-list-item class="textAppearanceHeadline5 mat-elevation-z4 m-lg-2" (click)="setAction(action.HighwayGroups)"> Highway Groups </a>
+  <a mat-list-item class="textAppearanceHeadline5 mat-elevation-z4 m-lg-2" (click)="setAction(action.AxleConfiguration)"> Axle Configuration </a>
+  <a mat-list-item class="textAppearanceHeadline5 mat-elevation-z4 m-lg-2" (click)="setAction(action.AxleLoad)"> Axle Load </a>
+  <a mat-list-item class="textAppearanceHeadline5 mat-elevation-z4 m-lg-2" (click)="setAction(action.SpectraCountyData)"> Spectra County Data </a>
+  <a mat-list-item class="textAppearanceHeadline5 mat-elevation-z4 m-lg-2" (click)="setAction(action.MERRA2List)"> MERRA2 List </a>
+  <a mat-list-item class="textAppearanceHeadline5 mat-elevation-z4 m-lg-2" (click)="setAction(action.HMADefaults)"> HMA Defaults </a>
+  <a mat-list-item class="textAppearanceHeadline5 mat-elevation-z4 m-lg-2" (click)="setAction(action.BaseDefaults)"> Base Defaults </a>
+  <a mat-list-item class="textAppearanceHeadline5 mat-elevation-z4 m-lg-2" (click)="setAction(action.SubgradeDefaults)"> Subgrade Defaults </a>
+</mat-nav-list>
+
+<mat-divider *ngIf="subMenuOpened" [inset]="true" class="mb-4 mt-2"></mat-divider>
+
+<a mat-list-item class="textAppearanceHeadline5 mat-elevation-z4" (click)="setAction(action.Run)"> Run </a>
+<a mat-list-item class="textAppearanceHeadline5 mat-elevation-z4"> Results </a>
+</ng-container>
+<a mat-list-item class="textAppearanceHeadline5 mat-elevation-z4" (click)="setAction(action.Close)">Close</a>
+
+

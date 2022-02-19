@@ -1,0 +1,23 @@
+.home-wrapper {
+    flex:1;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: -100px;
+    min-width: 450px;
+
+  .home-wrapper-action {
+    margin-top: 3rem;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    margin-left: 0;
+    margin-right: 0;
+
+    button {
+      flex-grow: 1;
+      flex-basis: 0;
+    }
+  }
+}

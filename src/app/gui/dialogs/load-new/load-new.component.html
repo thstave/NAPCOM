@@ -1,0 +1,29 @@
+<mat-toolbar color="primary" role="toolbar" class="d-flex justify-content-between">
+  <span>Load Data</span>
+  <button mat-icon-button (click)="close()">
+    <mat-icon mat-list-icon>close</mat-icon>
+  </button>
+</mat-toolbar>
+
+<mat-form-field class="mt-3">
+  <input matInput placeholder="Working Directory" (change)="onDirectoryChange($event)" [(ngModel)]="displayDirectory">
+  <button (click)="directory()" mat-button matSuffix mat-stroked-button>
+    <mat-icon>folder</mat-icon>
+  </button>
+</mat-form-field>
+
+<mat-tab-group>
+  <mat-tab label="Analysis Data">
+    <app-analysis-params [reload]="reloadSubject.asObservable()"></app-analysis-params>
+  </mat-tab>
+  <mat-tab label="Data Files">
+    <app-data-file-config [reload]="reloadSubject.asObservable()"></app-data-file-config>
+  </mat-tab>
+</mat-tab-group>
+
+<!-- Submit -->
+<div class="button-wrapper d-flex justify-content-between">
+  <button mat-flat-button color="primary" (click)="save()">Submit</button>
+  <button mat-flat-button (click)="close()">Cancel</button>
+</div>
+

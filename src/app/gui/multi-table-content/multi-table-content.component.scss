@@ -1,0 +1,23 @@
+
+.multi-table-content-wrapper {
+  flex:1;
+  overflow-y: auto;
+  overflow-x: hidden;
+
+  button {
+    margin-bottom: 1.5rem;
+    margin-top: 1.5rem;
+    margin-right: 1rem;
+    margin-left: 1rem;
+    width: 150px;
+  }
+}
+
+.multi-table-content-paged {
+  margin-bottom: 80px;
+}
+
+.multi-table-content {
+  margin-right: 2rem;
+  justify-content: space-between;
+}

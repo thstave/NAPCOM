@@ -1,0 +1,27 @@
+<form [formGroup]="runForm" class="w-75" novalidate>
+
+  <mat-form-field>
+    <input matInput placeholder="Command" formControlName="command">
+  </mat-form-field>
+
+  <mat-form-field>
+    <input matInput placeholder="Arguments" formControlName="args">
+  </mat-form-field>
+
+  <mat-divider [inset]="true" class="mb-4 mt-4"></mat-divider>
+
+  <mat-form-field>
+    <input matInput placeholder="Return Code" formControlName="code" readonly>
+  </mat-form-field>
+
+  <mat-form-field>
+    <textarea matInput placeholder="Results" formControlName="results" cdkTextareaAutosize
+         cdkAutosizeMinRows="10" readonly></textarea>
+  </mat-form-field>
+
+  <div class="button-wrapper d-flex justify-content-between">
+    <button mat-flat-button color="primary" (click)="run()">Run</button>
+  </div>
+
+</form>
+

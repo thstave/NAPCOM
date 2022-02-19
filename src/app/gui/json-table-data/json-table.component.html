@@ -1,0 +1,76 @@
+<div [ngStyle]="{'height': calculcatedHeight()}" class="json-table-wrapper mat-elevation-z8 column">
+  <table class="w-100 h-100 mat-elevation-z8 table-scroll-bar" *ngIf="!loading" mat-table matSort matTableResponsive
+         [dataSource]="dataSource">
+
+    <ng-container *ngFor="let col of displayedColumns" matColumnDef="{{col}}">
+
+      <ng-container *ngIf="!table.noHeading">
+        <th mat-header-cell *matHeaderCellDef [class]="{'json-table-edit-button':(getAttribute(col).type == 'edit')}">
+          {{getAttribute(col).title}}
+        </th>
+      </ng-container>
+
+      <td mat-cell *matCellDef="let element; let pos = index"
+          [class]="{'json-table-edit-button':(getAttribute(col).type == 'edit')}">
+
+        <!-- If edit flag is set set the icon       -->
+        <div *ngIf="getAttribute(col).type == 'edit'">
+          <button mat-icon-button (click)="toggleEdit(pos)">
+            <mat-icon>edit</mat-icon>
+          </button>
+        </div>
+
+        <!-- If not table editable, just display -->
+        <ng-container *ngIf="!isEdit(pos); else jsonTableElseBlock">
+          <div *ngIf="!(getAttribute(col).type == 'edit') && element[col]">
+            <ng-container *ngIf="getAttribute(col).type == 'exponent'; else jsonTableElseEntry">
+              {{scientificNotation(element[col])}}
+            </ng-container>
+            <ng-template #jsonTableElseEntry>
+              {{element[col]}}
+            </ng-template>
+          </div>
+        </ng-container>
+
+        <!-- else  -->
+        <ng-template #jsonTableElseBlock>
+          <!-- If column not editable, just display -->
+          <div *ngIf="!getAttribute(col).editable; else jsonTableEditElseBlock">
+            <!-- Not Editable so just display -->
+            {{element[col]}}
+          </div>
+
+          <!-- else -- display as input -->
+          <ng-template #jsonTableEditElseBlock>
+
+            <!-- Editable so use input -->
+            <ng-template [ngSwitch]="getAttribute(col).type">
+
+              <!-- Number -->
+              <mat-form-field *ngSwitchCase="'number'">
+                <mat-label class="json-table-row-edit-label">{{col}}</mat-label>
+                <!-- Since we are using appDecimalPlaces make type text -->
+                <input appDecimalPlaces [numOfDecimals]="0" [type]="'text'" matInput [(ngModel)]="element[col]">
+              </mat-form-field>
+
+              <!-- String -->
+              <mat-form-field *ngSwitchDefault>
+                <mat-label class="json-table-row-edit-label">{{col}}</mat-label>
+                <input [type]="getAttribute(col).type" matInput [(ngModel)]="element[col]">
+              </mat-form-field>
+
+            </ng-template>
+
+          </ng-template>
+        </ng-template>
+      </td>
+    </ng-container>
+
+    <ng-container *ngIf="!table.noHeading">
+      <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true" ></tr>
+    </ng-container>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns; let pos = index"
+        [ngClass]="{'json-table-row-edit' : isEdit(pos)}"></tr>
+  </table>
+  <mat-paginator *ngIf="usePaging" [pageSize]="pageCount()" [showFirstLastButtons]="true"></mat-paginator>
+</div>

@@ -1,0 +1,58 @@
+<mat-toolbar>
+  <button mat-icon-button (click)="sideBarToggle()" aria-label="Example icon-button with menu icon">
+    <mat-icon>menu</mat-icon>
+  </button>
+  <span class="h-center">NAPCOM</span>
+</mat-toolbar>
+
+<mat-sidenav-container >
+
+  <mat-sidenav mode="side" class="app-sidenav mat-elevation-z10" [(opened)]="opened" (opened)="events.push('open!')"
+               (closed)="events.push('close!')">
+
+    <mat-nav-list class="app-sidenav-list">
+      <app-sidebar-menu (newSidenavAction)="onSidenavAction($event)"></app-sidebar-menu>
+    </mat-nav-list>
+
+  </mat-sidenav>
+
+  <mat-sidenav-content [ngSwitch]="selectedMenuItem" class="content-wrapper mat-elevation-z8">
+
+    <app-single-table-content class="content" *ngSwitchCase="sidenavContent.HPMSData" [table]="tableData(sidenavContent.HPMSData)"></app-single-table-content>
+    <app-single-table-content class="content" *ngSwitchCase="sidenavContent.StatesRegions" [table]="tableData(sidenavContent.StatesRegions)"></app-single-table-content>
+    <app-single-table-content class="content" *ngSwitchCase="sidenavContent.HighwayGroups" [table]="tableData(sidenavContent.HighwayGroups)"></app-single-table-content>
+    <app-single-table-content class="content" *ngSwitchCase="sidenavContent.AxleConfiguration" [table]="tableData(sidenavContent.AxleConfiguration)"></app-single-table-content>
+
+    <app-multi-table-content
+      class="content"
+      *ngSwitchCase="sidenavContent.AxleLoad"
+      [heading]="'Axle Load Spectra'"
+      [tables]="tableArray(sidenavContent.AxleLoad)">
+    </app-multi-table-content>
+
+    <app-single-table-content class="content" *ngSwitchCase="sidenavContent.SpectraCountyData" [table]="tableData(sidenavContent.SpectraCountyData)"></app-single-table-content>
+    <app-single-table-content class="content" *ngSwitchCase="sidenavContent.MERRA2List" [table]="tableData(sidenavContent.MERRA2List)"></app-single-table-content>
+
+    <app-multi-table-content
+      class="content"
+      *ngSwitchCase="sidenavContent.HMADefaults"
+      [heading]="'HMA Defaults'"
+      [tables]="tableArray(sidenavContent.HMADefaults)">
+    </app-multi-table-content>
+
+    <app-single-table-content class="content" *ngSwitchCase="sidenavContent.BaseDefaults" [table]="tableData(sidenavContent.BaseDefaults)"></app-single-table-content>
+
+    <app-multi-table-content
+      class="content"
+      *ngSwitchCase="sidenavContent.SubgradeDefaults"
+      [heading]="'Subgrade Defaults'"
+      [tables]="tableArray(sidenavContent.SubgradeDefaults)">
+    </app-multi-table-content>
+
+    <app-run-script *ngSwitchCase="sidenavContent.Run" class="w-100"></app-run-script>
+
+    <app-home class="content" *ngSwitchDefault></app-home>
+
+  </mat-sidenav-content>
+
+</mat-sidenav-container>

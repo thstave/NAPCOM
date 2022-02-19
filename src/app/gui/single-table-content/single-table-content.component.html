@@ -1,0 +1,19 @@
+<div #singleTableContentWrapper class="single-table-content-wrapper mat-typography">
+  <div class="single-table-content-heading-block">
+    <div class="display-2">{{heading}}</div>
+    <div class="d-flex justify-content-between">
+     <h2  class="mt-lg-3">{{fileName}}</h2>
+      <div class="d-flex">
+        <button mat-flat-button color="primary" (click)="open()">Open</button>
+        <button mat-flat-button (click)="reload()">Reload</button>
+      </div>
+    </div>
+  </div>
+  <app-json-table class="w-100"
+                  [table]="table"
+                  [maxTableHeight]="maxTableHeight"
+                  [refreshEvent]="tableRefreshSubject.asObservable()">
+
+  </app-json-table>
+</div>
+

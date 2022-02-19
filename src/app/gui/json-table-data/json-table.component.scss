@@ -1,0 +1,61 @@
+
+.json-table-wrapper {
+  border-radius: 22px;
+  mat-icon {
+    font-size: 15px;
+    height: 15px ;
+    width: 15px;
+  }
+
+  table {
+    width: 100%;
+    border-collapse: separate;
+    border-radius: 22px;
+  }
+
+  table tr:last-child td /*To remove the last border*/
+  {
+    border-bottom:0 solid
+  }
+
+  input {
+    margin-top: .35em;
+  }
+
+  mat-paginator{
+    border-radius: 20px;
+  }
+
+  .mat-table {
+    display: block;
+    width: 100%;
+    overflow-x: auto;
+  }
+
+  .mat-cell,
+  .mat-header-cell {
+    word-wrap: initial;
+    display: table-cell;
+    padding: 0px 10px;
+    line-break: unset;
+    width: auto;
+    white-space: nowrap;
+    overflow: hidden;
+    vertical-align: middle;
+  }
+
+  .mat-row,
+  .mat-header-row {
+    display: table-row;
+  }
+
+  .json-table-edit-button {
+    width: 20px;
+  }
+}
+
+.json-table-row-edit {
+  td {
+    padding-top: .3em;
+  }
+}

@@ -1,0 +1,21 @@
+<div class="multi-table-content-wrapper mat-typography">
+  <div class="multi-table-content-heading-block">
+    <div class="display-2">{{heading}}</div>
+    <div *ngFor="let item of [].constructor(tableCnt); let pos = index" class="multi-table-content"
+         [ngClass]="{'multi-table-content-paged': table(pos).usePaging}">
+      <div class="d-flex justify-content-between">
+        <h2 class="mt-lg-3">{{tableFileName(pos)}}</h2>
+        <div class="d-flex">
+          <button mat-flat-button color="primary" (click)="open(pos)">Open</button>
+          <button mat-flat-button (click)="reload(pos)">Reload</button>
+        </div>
+      </div>
+      <app-json-table class="w-100"
+                      [table]="table(pos)"
+                      [maxTableHeight]="maxTableHeight"
+                      [refreshEvent]="tableRefreshSubject.asObservable()">
+
+      </app-json-table>
+    </div>
+  </div>
+</div>

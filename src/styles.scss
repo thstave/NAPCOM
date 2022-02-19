@@ -1,0 +1,60 @@
+@use '@angular/material' as mat;
+
+@include mat.core();
+
+@import '@angular/material/theming' ;
+@import 'src/styles/_themes';
+
+@import "bootstrap/scss/bootstrap";
+@import 'font-awesome/scss/font-awesome.scss';
+@import 'material-icons/iconfont/material-icons.scss';
+
+html, body, .mat-sidenav-container {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+}
+
+form {
+  min-width: 420px;
+  width: 60%;
+  margin: 35px auto 100px;
+  display: block;
+  float: none;
+}
+
+.mat-form-field {
+  width: 100%;
+}
+
+.misc-bottom-padding {
+  margin: 8px 0 20px;
+}
+
+.misc-bottom-padding mat-label {
+  margin-right: 15px;
+}
+
+.mat-radio-label {
+  margin: 0 15px 0 0;
+}
+
+.title-center {
+  margin: 0 auto;
+}
+
+.button-wrapper {
+  margin-top: 10px;
+}
+
+.h-center {
+  display: flex;
+  justify-content: center;
+}
+
+@import 'app/shared/directives/mat-table-responsive/mat-table-responsive.directive';
+
+
