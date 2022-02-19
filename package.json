@@ -1,11 +1,8 @@
 {
-  "name": "angular-electron",
-  "version": "13.0.0",
-  "description": "Angular 12 with Electron (Typescript + SASS + Hot Reload)",
-  "homepage": "https://github.com/maximegris/angular-electron",
+  "name": "NAPCOM",
+  "version": "0.2.0",
   "author": {
-    "name": "Maxime GRIS",
-    "email": "maxime.gris@gmail.com"
+    "name": "Tom Stave"
   },
   "keywords": [
     "angular",

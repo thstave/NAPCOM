@@ -9,12 +9,12 @@ export abstract class AbstractJsonTableData  implements IJsonTableData {
   schema: string[];
   jsonData: any[];
 
-  abstract fileName: string;
-  abstract heading: string;
-  abstract isTableEditable: boolean;
-  abstract usePaging: boolean;
-  abstract rowCount: number;
-  abstract noHeading: boolean;
+  abstract fileName: string;  // file name of the source data file
+  abstract heading: string;   // The header to display with the table
+  abstract isTableEditable: boolean; // whether the table should be editable
+  abstract usePaging: boolean;  // whether to use a paged display when displaying
+  abstract rowCount: number;    // the number of rows to display (-1 if just meant to fill the page)
+  abstract noHeading: boolean;  // whether the table had headings defined
 
   constructor(jsonData: any[]) {
     this.initialize(jsonData);

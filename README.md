@@ -6,6 +6,7 @@ Currently the application can build a multi-platform desktop application for Win
 Current Development Stack
 - Electron
 - Angular
+- Material
 - Typscript
 - Bootstrap
 - SASS
@@ -45,27 +46,30 @@ npm install -g @angular/cli
 
 ## To build for development
 
-- **in a terminal window** ->  npm run electron:local
-
+- **in a terminal window** ->  ```npm run electron:local```
 
 ## Project structure
 
-###Folder Structure
-| Folder       | Description                                                        |
-|--------------|--------------------------------------------------------------------|
-| app          | Electron main process folder (NodeJS)                              |
-| src          | All applicaiton code. (Angular application modules)                |
-| src/electron | electron specific code and services (NodeJS)                       |
-| src/gui      | primary GUI components (Angular)                                   |
-| src/home     | home page (Angular)                                                |
-| src/main     | framework for application layout (Angular)                         |
-| src/service  | UI services (Angular)                                              |
-| src/shared   | shared components and directives (Angular)                         |
-| assets       | images and file assets                                             |
-| environments | definition of application environments (not currently implemented) |
-| styles       | global style sheets.                                               |
+### Folder Structure
 
-###Key Files
+| Folder           | Description                                                        |
+|------------------|--------------------------------------------------------------------|
+| app              | Electron main process folder (NodeJS)                              |
+| src              | All applicaiton code. (Angular application modules)                |
+| src/app          | the application code                                               |
+| src/app/electron | electron specific code and services (NodeJS)                       |
+| src/app/gui      | primary GUI components (Angular)                                   |
+| src/app/home     | home page (Angular)                                                |
+| src/app/main     | framework for application layout (Angular)                         |
+| src/app/service  | UI services (Angular)                                              |
+| src/app/shared   | shared components and directives (Angular)                         |
+| src/assets       | images and file assets (need to be replaced with more relevant)    |
+| src/environments | definition of application environments (not currently implemented) |
+| src/styles       | global style sheets.                                               |
+
+
+### Files of Note
+
 | File               | Description                                                        |
 |--------------------|--------------------------------------------------------------------|
 | package.json       | NodeJS packages and build scripts                                  |
@@ -77,92 +81,22 @@ npm install -g @angular/cli
 | styles.scss        | entry point for all styles sheet (scss)                            |
 | main.ts            | application entry point                                            |                                            |
 
-## Use Electron / NodeJS libraries
 
-3rd party libraries used in electron's main process (like an ORM) have to be added in `dependencies` of `app/package.json`.
-This sample project runs in both modes (web and electron). To make this work, **you have to import your dependencies the right way**. \
+## Themes
+Angular Material themes are used for all colors and font declarations.  All color (and font) definitions should be placed in theme files and use colors based on the theme's color palette.
 
-## Use "web" 3rd party libraries (like angular, material, bootstrap, ...)
+Each component that utilizes the theme has a second style sheet included with it.  These files are located with the component definition and end with ```-theme.scss```.
 
-3rd party libraries used in electron's renderer process (like angular) have to be added in `dependencies` of `package.json`. \
-Please check `providers/electron.service.ts` to watch how conditional import of libraries has to be done when using NodeJS / 3rd party libraries in renderer context (i.e. Angular).
+For consistency, these themes should define the mixin ```@mixin theme($theme)``` which should be included in the ```styles/_themes.scss```.
 
-## Add a dependency with ng-add
+For more information on Angular Material themes.
+```https://material.angular.io/guide/theming```
 
-You may encounter some difficulties with `ng-add` because this project doesn't use the defaults `@angular-builders`. \
-For example you can find [here](HOW_TO.md) how to install Angular-Material with `ng-add`.
+**Currently, there may be warnings on duplicate themes.  For now these may be ignored.
 
-## Browser mode
+## Data
+Currently the default directory is ```../Data```.  It is recommended that the existing CSV files be placed in this directory.  At this time there is no option to change the default directory.
 
-Maybe you only want to execute the application in the browser with hot reload? Just run `npm run ng:serve:web`.
+The directory can always be changed once the application is started.
 
-## Included Commands
 
-|Command|Description|
-| ---- | ---- |
-|`npm run ng:serve`| Execute the app in the browser |
-|`npm run build`| Build the app. Your built files are in the /dist folder. |
-|`npm run build:prod`| Build the app with Angular aot. Your built files are in the /dist folder. |
-|`npm run electron:local`| Builds your application and start electron
-|`npm run electron:build`| Builds your application and creates an app consumable based on your operating system |
-
-**Your application is optimised. Only /dist folder and NodeJS dependencies are included in the final bundle.**
-
-## You want to use a specific lib (like rxjs) in electron main thread ?
-
-YES! You can do it! Just by importing your library in npm dependencies section of `app/package.json` with `npm install --save XXXXX`. \
-It will be loaded by electron during build phase and added to your final bundle. \
-Then use your library by importing it in `app/main.ts` file. Quite simple, isn't it?
-
-## E2E Testing
-
-E2E Test scripts can be found in `e2e` folder.
-
-|Command|Description|
-| ---- | ---- |
-|`npm run e2e`| Execute end to end tests |
-
-Note: To make it work behind a proxy, you can add this proxy exception in your terminal  
-`export {no_proxy,NO_PROXY}="127.0.0.1,localhost"`
-
-## Debug with VsCode
-
-[VsCode](https://code.visualstudio.com/) debug configuration is available! In order to use it, you need the extension [Debugger for Chrome](https://marketplace.visualstudio.com/items?itemName=msjsdiag.debugger-for-chrome).
-
-Then set some breakpoints in your application's source code.
-
-Finally from VsCode press **Ctrl+Shift+D** and select **Application Debug** and press **F5**.
-
-Please note that Hot reload is only available in Renderer process.
-
-## Branch & Packages version
-
-- Angular 4 & Electron 1 : Branch [angular4](https://github.com/maximegris/angular-electron/tree/angular4)
-- Angular 5 & Electron 1 : Branch [angular5](https://github.com/maximegris/angular-electron/tree/angular5)
-- Angular 6 & Electron 3 : Branch [angular6](https://github.com/maximegris/angular-electron/tree/angular6)
-- Angular 7 & Electron 3 : Branch [angular7](https://github.com/maximegris/angular-electron/tree/angular7)
-- Angular 8 & Electron 7 : Branch [angular8](https://github.com/maximegris/angular-electron/tree/angular8)
-- Angular 9 & Electron 7 : Branch [angular9](https://github.com/maximegris/angular-electron/tree/angular9)
-- Angular 10 & Electron 9 : Branch [angular10](https://github.com/maximegris/angular-electron/tree/angular10)
-- Angular 11 & Electron 12 : Branch [angular10](https://github.com/maximegris/angular-electron/tree/angular11)
-- Angular 12 & Electron 13 : (master)
-
-[maintained-badge]: https://img.shields.io/badge/maintained-yes-brightgreen
-[license-badge]: https://img.shields.io/badge/license-MIT-blue.svg
-[license]: https://github.com/maximegris/angular-electron/blob/master/LICENSE.md
-[prs-badge]: https://img.shields.io/badge/PRs-welcome-red.svg
-[prs]: http://makeapullrequest.com
-
-[linux-build-badge]: https://github.com/maximegris/angular-electron/workflows/Linux%20Build/badge.svg
-[linux-build]: https://github.com/maximegris/angular-electron/actions?query=workflow%3A%22Linux+Build%22
-[macos-build-badge]: https://github.com/maximegris/angular-electron/workflows/MacOS%20Build/badge.svg
-[macos-build]: https://github.com/maximegris/angular-electron/actions?query=workflow%3A%22MacOS+Build%22
-[windows-build-badge]: https://github.com/maximegris/angular-electron/workflows/Windows%20Build/badge.svg
-[windows-build]: https://github.com/maximegris/angular-electron/actions?query=workflow%3A%22Windows+Build%22
-
-[github-watch-badge]: https://img.shields.io/github/watchers/maximegris/angular-electron.svg?style=social
-[github-watch]: https://github.com/maximegris/angular-electron/watchers
-[github-star-badge]: https://img.shields.io/github/stars/maximegris/angular-electron.svg?style=social
-[github-star]: https://github.com/maximegris/angular-electron/stargazers
-[twitter]: https://twitter.com/intent/tweet?text=Check%20out%20angular-electron!%20https://github.com/maximegris/angular-electron%20%F0%9F%91%8D
-[twitter-badge]: https://img.shields.io/twitter/url/https/github.com/maximegris/angular-electron.svg?style=social

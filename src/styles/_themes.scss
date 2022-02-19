@@ -5,7 +5,6 @@
 @use 'src/app/gui/multi-table-content/multi-table-content.component-theme' as multi-table;
 @use 'src/app/home/home.component-theme' as home;
 @use 'src/styles/styles-theme' as global;
-//@use 'app/gui/dialogs/load-new/data-file-config/data-file-config.component-theme' as data-file-config;
 
 @import 'node_modules/@angular/material/theming';
 @include mat-core();
@@ -55,7 +54,6 @@ $edt-theme: mat.define-light-theme((
 @include single-table.theme($nav-theme);
 @include multi-table.theme($nav-theme);
 @include home.theme($nav-theme);
-//@include data-file-config.theme($nav-theme);
 
 
 
