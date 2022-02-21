@@ -12,6 +12,7 @@ export class SidebarMenuComponent {
   @Output() newSidenavAction = new EventEmitter<SidenavAction>();
   action = SidenavAction;
   subMenuOpened = false;
+  subMenuOpened2 = false;
 
   constructor(private systemConfigService:SystemConfigService) {console.log("sidebar"); }
 
@@ -24,6 +25,9 @@ export class SidebarMenuComponent {
     this.subMenuOpened = !this.subMenuOpened;
   }
 
+  toggleSubMenu2() : void {
+    this.subMenuOpened2 = !this.subMenuOpened2;
+  }
   hasData() : boolean {
     return this.systemConfigService.dataHasBeenRead;
   }

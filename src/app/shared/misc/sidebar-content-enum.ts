@@ -12,5 +12,6 @@ export enum SidenavAction {
   HMADefaults,
   BaseDefaults,
   SubgradeDefaults,
-  Run
+  Run,
+  ANLSettings
 }

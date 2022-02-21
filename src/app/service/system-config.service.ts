@@ -10,7 +10,8 @@ export class SystemConfigService {
 
   private _appConfigFileName = "app_config.json";
   // System Default Directory
-  defaultDataDirectory = '../Data';
+  // defaultDataDirectory = '../Data';
+  defaultDataDirectory = '/Users/kutay/My Drive/_Docs/My Algorithms/_UPDAPS2Codes/_NAPCOMPlus/Deploy/io';
   dataHasBeenRead = false;
 
   // Default file names.

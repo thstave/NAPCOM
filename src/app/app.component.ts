@@ -10,7 +10,7 @@ import {Title} from "@angular/platform-browser";
 export class AppComponent {
 
   constructor( private title: Title) {
-    this.title.setTitle('NAPCOM');
+    this.title.setTitle('NAPCOMPlus');
   }
 
 }

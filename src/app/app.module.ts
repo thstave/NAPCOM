@@ -40,6 +40,7 @@ import {CopyDirComponent} from "./gui/dialogs/copy-dir/copy-dir.component";
     MultiTableContentComponent,
     HomeComponent,
     RunScriptComponent],
+
   imports: [
     HttpClientModule,
     ElectronModule,

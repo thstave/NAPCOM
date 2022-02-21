@@ -1,27 +1,142 @@
+<mat-tab-group>
+    <form [formGroup]="anlForm" class="w-75" novalidate>
+        <mat-tab label="Python Settings">
+            <!-- PYTHON Settings -->
+            <mat-card>
+                <div class="display-6 text-left">PYTHON Settings</div>
+                <mat-form-field>
+                    <input matInput placeholder="Local Python environment" formControlName="PythonEnv">
+                </mat-form-field>
+            </mat-card>
+
+            <mat-divider [inset]="true" class="mb-4 mt-4"></mat-divider>
+        </mat-tab>
+
+        <mat-tab label="ANL Settings">
+            <!-- ANL Settings -->
+            <mat-card>
+                <div class="display-6 text-left">ANL Settings</div>
+                <mat-form-field>
+                    <input matInput placeholder="ANL Host" formControlName="ANLHost">
+                </mat-form-field>
+
+                <mat-form-field>
+                    <input matInput placeholder="ANL User" formControlName="anl_user">
+                </mat-form-field>
+
+                <mat-form-field>
+                    <input matInput placeholder="ANL Node Cluster" formControlName="ANLNodeCluster">
+                </mat-form-field>
+
+                <mat-form-field>
+                    <input matInput placeholder="ANL Password" formControlName="ANLpwd" type="password">
+                </mat-form-field>
+
+                <div class="button-wrapper d-flex justify-content-between">
+                    <button mat-flat-button color="primary" (click)="checkconnection()">Check connection</button>
+                </div>
+            </mat-card>
+            <mat-divider [inset]="true" class="mb-4 mt-4"></mat-divider>
+        </mat-tab>
+
+
+        <mat-tab label="NAPCOM codes">
+            <!-- NAPCOM plus codes -->
+            <mat-card>
+                <div class="display-6 text-left">NAPCOM codes</div>
+                <mat-form-field>
+                    <input matInput placeholder="Local NAPCOM (Python) Folder" formControlName="localNAPCOMfld">
+                </mat-form-field>
+
+                <mat-form-field>
+                    <input matInput placeholder="ANL NAPCOM (Python) Folder" formControlName="remoteNAPCOMfld">
+                </mat-form-field>
+
+                <mat-form-field>
+                    <input matInput placeholder="Extensions to send (e.g., ['*.py', '*.pkl'])" formControlName="ext">
+                </mat-form-field>
+
+                <mat-form-field>
+                    <input matInput placeholder="NAPCOM Data File Directory" formControlName="NAPCOMDataDir">
+                </mat-form-field>
+
+                <!-- Submit NAPCOM button -->
+
+                <div class="button-wrapper d-flex justify-content-between">
+                    <button mat-flat-button color="primary" (click)="uploadnapcomfiles()">Upload NAPCOM files</button>
+                </div>
+            </mat-card>
+            <mat-divider [inset]="true" class="mb-4 mt-4"></mat-divider>
+
+        </mat-tab>
+
+
+        <mat-tab label="UPDAPS codes">
+
+            <mat-card>
+                <!-- UPDAPS  codes -->
+                <div class="display-6 text-left">UPDAPS codes</div>
+
+                <mat-form-field>
+                    <input matInput placeholder="Local UPDAPS (Python) Folder" formControlName="localUPDAPSACfld">
+                </mat-form-field>
+
+                <mat-form-field>
+                    <input matInput placeholder="ANL UPDAPS (Python) Folder" formControlName="remoteUPDAPSACfld">
+                </mat-form-field>
+
+                <mat-form-field>
+                    <input matInput placeholder="Extensions to send (e.g., ['*.py', '*.pkl', '*.xlsx'])"
+                           formControlName="ext2">
+                </mat-form-field>
+                <!-- Submit NAPCOM button -->
+
+                <div class="button-wrapper d-flex justify-content-between">
+                    <button mat-flat-button color="primary" (click)="uploadupdapsfiles()">Upload UPDAPS files</button>
+                </div>
+
+            </mat-card>
+            <mat-divider [inset]="true" class="mb-4 mt-4"></mat-divider>
+        </mat-tab>
+
+    </form>
+
+</mat-tab-group>
+
+
 <form [formGroup]="runForm" class="w-75" novalidate>
+    <mat-card>
+        <div class="display-6 text-left">Shell commands</div>
 
-  <mat-form-field>
-    <input matInput placeholder="Command" formControlName="command">
-  </mat-form-field>
+        <mat-form-field>
+            <input matInput placeholder="Command" formControlName="command">
+        </mat-form-field>
 
-  <mat-form-field>
-    <input matInput placeholder="Arguments" formControlName="args">
-  </mat-form-field>
+        <mat-form-field>
+            <input matInput placeholder="Arguments" formControlName="args">
+        </mat-form-field>
 
-  <mat-divider [inset]="true" class="mb-4 mt-4"></mat-divider>
+        <mat-divider [inset]="true" class="mb-4 mt-4"></mat-divider>
 
-  <mat-form-field>
-    <input matInput placeholder="Return Code" formControlName="code" readonly>
-  </mat-form-field>
+        <mat-form-field>
+            <input matInput placeholder="Return Code" formControlName="code" readonly>
+        </mat-form-field>
 
-  <mat-form-field>
+        <mat-form-field>
     <textarea matInput placeholder="Results" formControlName="results" cdkTextareaAutosize
-         cdkAutosizeMinRows="10" readonly></textarea>
-  </mat-form-field>
+              cdkAutosizeMinRows="10" readonly></textarea>
+        </mat-form-field>
 
-  <div class="button-wrapper d-flex justify-content-between">
-    <button mat-flat-button color="primary" (click)="run()">Run</button>
-  </div>
+        <div class="button-wrapper d-flex justify-content-between">
+            <button mat-flat-button color="primary" (click)="run()">Run</button>
+        </div>
+
+    </mat-card>
+
 
 </form>
+
+
+
+
 
