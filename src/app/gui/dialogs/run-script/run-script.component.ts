@@ -31,7 +31,7 @@ export class RunScriptComponent implements OnInit {
       ANLHost: ["login1.arrow.tracc.anl.gov", [required]],
       anl_user: ["ac.mkutay", [required]],
       ANLNodeCluster: ["batch", [required]],
-      ANLpwd: ["Ne?Sifre2021Ama", [required]],
+      ANLpwd: ["", [required]],
       localNAPCOMfld: ["/Users/kutay/My Drive/_Docs/My Algorithms/_UPDAPS2Codes/_NAPCOMPlus/Deploy/", [required]],
       remoteNAPCOMfld: ["/mnt/lustre/arrow/home/ac.mkutay/updapscodes/napcomplus/", [required]],
       ext: ["*.py", [required]],
