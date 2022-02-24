@@ -40,8 +40,42 @@ export class RunScriptComponent implements OnInit {
       localUPDAPSACfld: ["/Users/kutay/My Drive/_Docs/My Algorithms/_UPDAPS2Codes/PythonCode_VECD_4Calibration", [required]],
       remoteUPDAPSACfld: ["/mnt/lustre/arrow/home/ac.mkutay/updapscodes/updapsac_vecd_3pt/", [required]],
       ext2: ["*.py, *.pkl, *.xlsx", [required]],
+      fltstr: ["state_code == 26 and surface_type == 2 and base_type == 2 and cracking_percent > 30.0 and thickness_flexible < 8.0 and year_last_improv < 2008 and year_last_improv > 1998", [required]],
+      remotejsonfld: ["/mnt/lustre/arrow/home/ac.mkutay/updapsruns/forMI/", [required]],
+      maxnorun: ["1000", [required]],
     });
   }
+
+  /**
+   * Called to store the data.  Returns a promise.
+   */
+  submitrun() {
+    const command = this.anlForm.value["PythonEnv"] +
+        " '" + this.anlForm.value["localNAPCOMfld"] + "/submitJOBs.py' '" +
+        this.anlForm.value["ANLHost"] + "' '" +
+        this.anlForm.value["anl_user"] + "' '" +
+        this.anlForm.value["ANLNodeCluster"] + "' '" +
+        this.anlForm.value["ANLpwd"] + "' '" +
+        this.anlForm.value["localNAPCOMfld"] + "' '" +
+        this.anlForm.value["remoteNAPCOMfld"] + "' '" +
+        this.anlForm.value["NAPCOMDataDir"] + "' '" +
+        this.anlForm.value["fltstr"] + "' '" +
+        this.anlForm.value["remotejsonfld"] + "' '" +
+        this.anlForm.value["localUPDAPSACfld"] + "' '" +
+        this.anlForm.value["remoteUPDAPSACfld"] + "' '" +
+        this.anlForm.value["maxnorun"] + "'"
+
+    console.log(command)
+    this.scriptService.runScript2(command)
+        .then((dat: ScriptReturn) => {
+          this.runForm.patchValue({results: dat.data});
+          this.runForm.patchValue({code: dat.code});
+        }).catch(err => {
+      this.runForm.patchValue({results: err});
+      this.runForm.patchValue({code: ""});
+    });
+  }
+
 
   /**
    * Called to store the data.  Returns a promise.
@@ -137,6 +171,7 @@ export class RunScriptComponent implements OnInit {
       this.runForm.patchValue({code: ""});
     });
   }
+
 
 
 
