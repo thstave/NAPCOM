@@ -2,6 +2,7 @@ import {IFieldAttributes} from "./i-json-table-data";
 import {RunDataService} from "../../service/run-data.service";
 import {AbstractJsonTableData} from "./abstract-json-table-data";
 import {SystemConfigService} from "../../service/system-config.service";
+import {MatTableDataSource} from "@angular/material/table";
 
 export class FipsCodesTable extends AbstractJsonTableData {
 
@@ -27,7 +28,7 @@ export class FipsCodesTable extends AbstractJsonTableData {
 
     this.heading = "States - Regions";
     this.fileName = configService.fileName('StatesRegions');
-    this.isTableEditable = true;
+    this.isTableEditable = false;
     this.usePaging = false;
     this.rowCount = -1;
     this.noHeading = false;
@@ -37,7 +38,7 @@ export class FipsCodesTable extends AbstractJsonTableData {
   //  We have to rebuild the table data.
   setJsonData(json) {
     this.runDataService.runData.fipsCode = json;
-    this.initialize(<any[]>this.runDataService.runData.fipsCode);
     this.relateAttributes(this.attributes);
+    this.dataSource = new MatTableDataSource([...json]);
   }
 }

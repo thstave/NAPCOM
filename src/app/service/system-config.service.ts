@@ -10,8 +10,7 @@ export class SystemConfigService {
 
   private _appConfigFileName = "app_config.json";
   // System Default Directory
-  // defaultDataDirectory = '../Data';
-  defaultDataDirectory = '/Users/kutay/My Drive/_Docs/My Algorithms/_UPDAPS2Codes/_NAPCOMPlus/Deploy/io';
+  defaultDataDirectory = '../Data';
   dataHasBeenRead = false;
 
   // Default file names.
@@ -20,6 +19,22 @@ export class SystemConfigService {
     states: "1,2,5,23",
     highwayTypes: "1,2,4",
     pavementTypes: "1,2,3",
+    maxNumberOfRuns: "1000",
+    anlHost: "login1.arrow.tracc.anl.gov",
+    anlUser: "ac.mkutay",
+    anlNodeCluster: "batch",
+    anlPwd: "",
+    pythonCmd: "/usr/local/opt/python@3.8/bin/python3",
+    jobSubmitCmd: "submitJOBs.py",
+    sendNapcomCmd:"sendNAPCOMfiles.py",
+    localNapcomDir: "/Users/kutay/My Drive/_Docs/My Algorithms/_UPDAPS2Codes/_NAPCOMPlus/Deploy/",
+    remoteNapcomDir: "/mnt/lustre/arrow/home/ac.mkutay/updapscodes/napcomplus/",
+    napcomExt: "*.py",
+    sendUpdapsCmd:"sendUPDAPSfiles.py",
+    localUpdapsacDir: "/Users/kutay/My Drive/_Docs/My Algorithms/_UPDAPS2Codes/PythonCode_VECD_4Calibration",
+    remoteUpdapsacDir: "/mnt/lustre/arrow/home/ac.mkutay/updapscodes/updapsac_vecd_3pt/",
+    updapsacExt: "*.py, *.pkl, *.xlsx",
+    checkConnectionCmd: "checkconnection.py",
     fileNames : {
       'HPMSData': "hpms2018_4_rev.csv",
       'StatesRegions': "FIPSCodes.csv",
@@ -63,17 +78,14 @@ export class SystemConfigService {
   fileName(tableName: string) : string {
 
     const fn : string = this.appConfigData.fileNames[tableName];
-    console.log(`tableName: ${tableName}  fileName: ${fn}`);
     return this.appConfigData.fileNames[tableName];
   }
 
   setFileName( tableName: string, fileName: string) {
-    console.log(`Set filename ${fileName}`);
     if (fileName.startsWith(this.workingDirectory)) {
 
       // add one to remove the '/'
       fileName = fileName.slice(this.workingDirectory.length + 1);
-      console.log(`Set filename ${fileName}`);
     }
     this.appConfigData.fileNames[tableName] = fileName;
   }

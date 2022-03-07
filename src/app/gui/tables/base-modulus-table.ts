@@ -2,6 +2,7 @@ import {IFieldAttributes, IJsonTableData} from "./i-json-table-data";
 import {RunDataService} from "../../service/run-data.service";
 import {AbstractJsonTableData} from "./abstract-json-table-data";
 import {SystemConfigService} from "../../service/system-config.service";
+import {MatTableDataSource} from "@angular/material/table";
 
 export class BaseModulusTable extends AbstractJsonTableData {
 
@@ -25,7 +26,7 @@ export class BaseModulusTable extends AbstractJsonTableData {
 
     this.heading = "Base Defaults";
     this.fileName = configService.fileName('BaseDefaults');
-    this.isTableEditable = true;
+    this.isTableEditable = false;
     this.usePaging = false;
     this.rowCount = -1;
     this.noHeading = false;
@@ -34,8 +35,9 @@ export class BaseModulusTable extends AbstractJsonTableData {
 
   //  We have to rebuild the table data.
   setJsonData(json) {
+    console.log("base setJsonData");
     this.runDataService.runData.baseModulus = json;
-    this.initialize(<any[]>this.runDataService.runData.baseModulus);
     this.relateAttributes(this.attributes);
+    this.dataSource = new MatTableDataSource([...json]);
   }
 }

@@ -2,6 +2,7 @@ import {IFieldAttributes} from "./i-json-table-data";
 import {RunDataService} from "../../service/run-data.service";
 import {AbstractJsonTableData} from "./abstract-json-table-data";
 import {SystemConfigService} from "../../service/system-config.service";
+import {MatTableDataSource} from "@angular/material/table";
 
 export class Merra2Table extends AbstractJsonTableData {
 
@@ -35,7 +36,7 @@ export class Merra2Table extends AbstractJsonTableData {
 
     this.heading = "MERRA2 List";
     this.fileName = configService.fileName('MERRA2List');
-    this.isTableEditable = true;
+    this.isTableEditable = false;
     this.usePaging = true;
     this.rowCount = -1;
     this.noHeading = false;
@@ -45,7 +46,7 @@ export class Merra2Table extends AbstractJsonTableData {
   //  We have to rebuild the table data.
   setJsonData(json) {
     this.runDataService.runData.merra2List = json;
-    this.initialize(<any[]>this.runDataService.runData.merra2List);
     this.relateAttributes(this.attributes);
+    this.dataSource = new MatTableDataSource([...json]);
   }
 }

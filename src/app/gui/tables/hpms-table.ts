@@ -1,6 +1,7 @@
 import {RunDataService} from "../../service/run-data.service";
 import {AbstractJsonTableData} from "./abstract-json-table-data";
 import {SystemConfigService} from "../../service/system-config.service";
+import {MatTableDataSource} from "@angular/material/table";
 
 export class HpmsTable extends AbstractJsonTableData {
 
@@ -16,7 +17,7 @@ export class HpmsTable extends AbstractJsonTableData {
 
     this.heading = "HPMS Data";
     this.fileName = configService.fileName('HPMSData');
-    this.isTableEditable = true;
+    this.isTableEditable = false;
     this.usePaging = true;
     this.rowCount = 15;
     this.noHeading = false;
@@ -38,7 +39,7 @@ export class HpmsTable extends AbstractJsonTableData {
   //  We have to rebuild the table data.
   setJsonData(json) {
     this.runDataService.runData.subgradeModulus = json;
-    this.initialize(<any[]>this.runDataService.runData.subgradeModulus);
     this.buildAttributes();
+    this.dataSource = new MatTableDataSource([...json]);
   }
 }

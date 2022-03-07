@@ -1,0 +1,49 @@
+<form [formGroup]="pythonForm" novalidate>
+
+  <mat-form-field>
+    <input matInput placeholder="Python Environment" formControlName="pythonEnv">
+  </mat-form-field>
+
+  <mat-form-field>
+    <input matInput placeholder="Python Command" formControlName="pythonCmd">
+  </mat-form-field>
+
+  <mat-form-field>
+    <input matInput placeholder="Job Submit Command" formControlName="jobSubmitCmd">
+  </mat-form-field>
+
+  <mat-divider [inset]="true" class="mb-4 mt-4"></mat-divider>
+
+  <mat-form-field>
+    <input matInput placeholder="Send NAPCOM Command" formControlName="sendNapcomCmd">
+  </mat-form-field>
+
+  <mat-form-field>
+    <input matInput placeholder="Local NAPCOM Directory" formControlName="localNapcomDir">
+  </mat-form-field>
+
+  <mat-form-field>
+    <input matInput placeholder="Remote NAPCOM Directory" formControlName="remoteNapcomDir">
+  </mat-form-field>
+
+  <mat-divider [inset]="true" class="mb-4 mt-4"></mat-divider>
+
+  <mat-form-field>
+    <input matInput placeholder="Send UPDAPS Command" formControlName="sendUpdapsCmd">
+  </mat-form-field>
+
+  <mat-form-field>
+    <input matInput placeholder="Local NAPCOM Directory" formControlName="localUpdapsacDir">
+  </mat-form-field>
+
+  <mat-form-field>
+    <input matInput placeholder="Remote NAPCOM Directory" formControlName="remoteUpdapsacDir">
+  </mat-form-field>
+
+  <mat-divider [inset]="true" class="mb-4 mt-4"></mat-divider>
+
+  <mat-form-field>
+    <input matInput placeholder="Check Connection Command" formControlName="checkConnectionCmd">
+  </mat-form-field>
+
+</form>

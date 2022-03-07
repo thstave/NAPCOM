@@ -2,6 +2,7 @@ import {IFieldAttributes} from "./i-json-table-data";
 import {RunDataService} from "../../service/run-data.service";
 import {AbstractJsonTableData} from "./abstract-json-table-data";
 import {SystemConfigService} from "../../service/system-config.service";
+import {MatTableDataSource} from "@angular/material/table";
 
 export class AxleloadSiTable extends AbstractJsonTableData {
 
@@ -36,8 +37,8 @@ export class AxleloadSiTable extends AbstractJsonTableData {
   //  We have to rebuild the table data.
   setJsonData(json) {
     this.runDataService.runData.axleLoadSi = json;
-    this.initialize(<any[]>this.runDataService.runData.axleLoadSi);
     this.buildAttributes();
+    this.dataSource = new MatTableDataSource([...json]);
   }
 }
 

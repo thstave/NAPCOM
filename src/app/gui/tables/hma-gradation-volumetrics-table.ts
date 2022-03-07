@@ -2,6 +2,7 @@ import {IFieldAttributes} from "./i-json-table-data";
 import {RunDataService} from "../../service/run-data.service";
 import {AbstractJsonTableData} from "./abstract-json-table-data";
 import {SystemConfigService} from "../../service/system-config.service";
+import {MatTableDataSource} from "@angular/material/table";
 
 export class HmaGradationVolumetricsTable extends AbstractJsonTableData {
 
@@ -39,7 +40,7 @@ export class HmaGradationVolumetricsTable extends AbstractJsonTableData {
   //  We have to rebuild the table data.
   setJsonData(json) {
     this.runDataService.runData.hmaGradation = json;
-    this.initialize(<any[]>this.runDataService.runData.hmaGradation);
     this.relateAttributes(this.attributes);
+    this.dataSource = new MatTableDataSource([...json]);
   }
 }

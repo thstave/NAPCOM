@@ -43,7 +43,6 @@ export class LoadNewComponent implements OnInit {
       this.runSvc.runData = fileData;
       return this.systemConfigService.writeConfigData();
     }).then( obj => {
-      console.log(this.runSvc.runData);
       this.dialogRef.close();
     }).catch(err => {
       console.log(err);
@@ -69,9 +68,7 @@ export class LoadNewComponent implements OnInit {
     const folder = this.systemConfigService.workingDirectory;
     console.log(folder);
     this.sysAccessService.browse(folder).then ( path => {
-      console.dir(path);
       if (!(path.canceled || path.filePaths.length === 0)){
-        console.log(path.filePaths[0]);
         this.systemConfigService.workingDirectory = path.filePaths[0];
         this.displayDirectory = this.systemConfigService.workingDirectory;
         this.systemConfigService.readConfigData().then(() => {

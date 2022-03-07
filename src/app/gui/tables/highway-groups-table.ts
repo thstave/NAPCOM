@@ -2,6 +2,7 @@ import {IFieldAttributes} from "./i-json-table-data";
 import {RunDataService} from "../../service/run-data.service";
 import {AbstractJsonTableData} from "./abstract-json-table-data";
 import {SystemConfigService} from "../../service/system-config.service";
+import {MatTableDataSource} from "@angular/material/table";
 
 export class HighwayGroupsTable extends AbstractJsonTableData {
 
@@ -26,7 +27,7 @@ export class HighwayGroupsTable extends AbstractJsonTableData {
 
     this.heading = "Highway Groups";
     this.fileName = configService.fileName('HighwayGroups');
-    this.isTableEditable = true;
+    this.isTableEditable = false;
     this.usePaging = false;
     this.rowCount = -1;
     this.noHeading = false;
@@ -36,7 +37,7 @@ export class HighwayGroupsTable extends AbstractJsonTableData {
   //  We have to rebuild the table data.
   setJsonData(json) {
     this.runDataService.runData.highwayGroups = json;
-    this.initialize(<any[]>this.runDataService.runData.highwayGroups);
     this.relateAttributes(this.attributes);
+    this.dataSource = new MatTableDataSource([...json]);
   }
 }

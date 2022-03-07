@@ -63,14 +63,11 @@ export class MainAppComponent {
   }
 
   onSidenavAction(action:SidenavAction) {
-    console.log("onSidenavAction");
     this.setContent(action);
   }
 
   tableData(action: SidenavAction): IJsonTableData {
     let data: IJsonTableData;
-    console.log("tabelData");
-    console.log(action);
     switch (action) {
 
       case SidenavAction.HPMSData: {
@@ -94,13 +91,10 @@ export class MainAppComponent {
         break;
       }
       case SidenavAction.BaseDefaults: {
-        console.log("SidenavAction.BaseDefaults");
         data = new BaseModulusTable(this.runDataService, this.configService);
-        console.log(data);
         break;
       }
       case SidenavAction.AxleConfiguration: {
-        console.log("SidenavAction.AxleConfiguration");
         data = new AxleConfigurationTable(this.runDataService, this.configService);
         break;
       }
@@ -115,8 +109,6 @@ export class MainAppComponent {
 
   tableArray(action: SidenavAction): IJsonTableData[] {
     const data: IJsonTableData[] = [];
-    console.log("tabelArray");
-    console.log(action);
 
     switch (action) {
 

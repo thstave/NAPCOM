@@ -35,6 +35,7 @@ export class JsonTableComponent implements OnInit {
   usePaging: boolean;
   loading = true;
   pageSize = 15;  // default value will be replaced.
+  tableEditable = false ;
 
   constructor() {}
 
@@ -43,6 +44,7 @@ export class JsonTableComponent implements OnInit {
     this.displayedColumns = this.table.schema;
     this.attributes = this.table.fieldAttributes;
     this.usePaging = this.table.usePaging;
+    this.tableEditable = this.table.isTableEditable;
     this.pageSize = this.calculatePageSize();
     if ( !this.usePaging) {
       this.dataSource.data = this.table.jsonData;
@@ -68,12 +70,9 @@ export class JsonTableComponent implements OnInit {
     }
 
     let maxHeight = this.maxHeight - this.nonRowHeight;
-    console.log(`Max Height 1: ${maxHeight}`);
     if ( this.table.usePaging) {
       maxHeight -= this.pagedBottomRowHeight;
-      console.log(`Max Height 2: ${maxHeight}`);
     }
-    console.log(`Rows: ${maxHeight / this.rowHeight}`);
     return Math.floor( maxHeight / this.rowHeight );
   }
 
@@ -82,10 +81,8 @@ export class JsonTableComponent implements OnInit {
     let height = 0;
     let maxHeight = this.maxHeight;
 
-    console.log(`Max Height 10: ${maxHeight}`);
     if ( this.table.usePaging) {
-      console.log(`Max Height 20: ${maxHeight}`);
-      maxHeight -= this.pagedBottomRowHeight
+      maxHeight -= this.pagedBottomRowHeight;
       height = (this.pageSize * this.rowHeight) + this.nonRowHeight ;
     } else if ( this.table.rowCount > -1 ) {
       height = (this.table.rowCount * this.rowHeight) + this.nonRowHeight ;
@@ -127,12 +124,13 @@ export class JsonTableComponent implements OnInit {
   refresh(fileNm: string) {
 
     if (this.table.fileName === fileNm) {
+      this.attributes = this.table.fieldAttributes;
 
       if ( this.usePaging) {
         this.dataSource.paginator = this.paginator;
       }
+      console.log(this.table.jsonData);
       this.dataSource.data = this.table.jsonData;
-      this.matTable.renderRows();
     }
   }
 }

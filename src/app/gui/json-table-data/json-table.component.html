@@ -15,7 +15,7 @@
 
         <!-- If edit flag is set set the icon       -->
         <div *ngIf="getAttribute(col).type == 'edit'">
-          <button mat-icon-button (click)="toggleEdit(pos)">
+          <button mat-icon-button *ngIf="tableEditable" (click)="toggleEdit(pos)">
             <mat-icon>edit</mat-icon>
           </button>
         </div>

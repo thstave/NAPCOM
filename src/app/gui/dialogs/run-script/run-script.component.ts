@@ -1,6 +1,8 @@
 import {Component, OnInit} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {ScriptReturn, ScriptService} from "../../../electron/services";
+import {RunScript} from "../../../electron/services/run-script";
+import {SystemConfigService} from "../../../service/system-config.service";
 
 @Component({
   selector: 'app-run-script',
@@ -11,8 +13,11 @@ export class RunScriptComponent implements OnInit {
   runForm: FormGroup;
   anlForm: FormGroup;
 
+  private runScript : RunScript = undefined;
+
   constructor(private fb: FormBuilder,
-              private scriptService: ScriptService) {
+              private scriptService: ScriptService,
+              private sysSvc: SystemConfigService) {
   }
 
   ngOnInit() {
@@ -24,156 +29,129 @@ export class RunScriptComponent implements OnInit {
       command: ["", [required]],
       args: ["", []],
       results: ["", []],
-      code: ["",[]]
-    });
-
-    this.anlForm = this.fb.group({
-      ANLHost: ["login1.arrow.tracc.anl.gov", [required]],
-      anl_user: ["ac.mkutay", [required]],
-      ANLNodeCluster: ["batch", [required]],
-      ANLpwd: ["", [required]],
-      localNAPCOMfld: ["/Users/kutay/My Drive/_Docs/My Algorithms/_UPDAPS2Codes/_NAPCOMPlus/Deploy/", [required]],
-      remoteNAPCOMfld: ["/mnt/lustre/arrow/home/ac.mkutay/updapscodes/napcomplus/", [required]],
-      ext: ["*.py", [required]],
-      PythonEnv: ["/usr/local/opt/python@3.8/bin/python3", [required]],
-      NAPCOMDataDir: ["/Users/kutay/My Drive/_Docs/My Algorithms/_UPDAPS2Codes/_NAPCOMPlus/Deploy/io/", [required]],
-      localUPDAPSACfld: ["/Users/kutay/My Drive/_Docs/My Algorithms/_UPDAPS2Codes/PythonCode_VECD_4Calibration", [required]],
-      remoteUPDAPSACfld: ["/mnt/lustre/arrow/home/ac.mkutay/updapscodes/updapsac_vecd_3pt/", [required]],
-      ext2: ["*.py, *.pkl, *.xlsx", [required]],
-      fltstr: ["state_code == 26 and surface_type == 2 and base_type == 2 and cracking_percent > 30.0 and thickness_flexible < 8.0 and year_last_improv < 2008 and year_last_improv > 1998", [required]],
-      remotejsonfld: ["/mnt/lustre/arrow/home/ac.mkutay/updapsruns/forMI/", [required]],
-      maxnorun: ["1000", [required]],
-    });
-  }
-
-  /**
-   * Called to store the data.  Returns a promise.
-   */
-  submitrun() {
-    const command = this.anlForm.value["PythonEnv"] +
-        " '" + this.anlForm.value["localNAPCOMfld"] + "/submitJOBs.py' '" +
-        this.anlForm.value["ANLHost"] + "' '" +
-        this.anlForm.value["anl_user"] + "' '" +
-        this.anlForm.value["ANLNodeCluster"] + "' '" +
-        this.anlForm.value["ANLpwd"] + "' '" +
-        this.anlForm.value["localNAPCOMfld"] + "' '" +
-        this.anlForm.value["remoteNAPCOMfld"] + "' '" +
-        this.anlForm.value["NAPCOMDataDir"] + "' '" +
-        this.anlForm.value["fltstr"] + "' '" +
-        this.anlForm.value["remotejsonfld"] + "' '" +
-        this.anlForm.value["localUPDAPSACfld"] + "' '" +
-        this.anlForm.value["remoteUPDAPSACfld"] + "' '" +
-        this.anlForm.value["maxnorun"] + "'"
-
-    console.log(command)
-    this.scriptService.runScript2(command)
-        .then((dat: ScriptReturn) => {
-          this.runForm.patchValue({results: dat.data});
-          this.runForm.patchValue({code: dat.code});
-        }).catch(err => {
-      this.runForm.patchValue({results: err});
-      this.runForm.patchValue({code: ""});
+      code: ["",[]],
+      liveResults: ["\n",[]]
     });
   }
 
 
-  /**
-   * Called to store the data.  Returns a promise.
-   */
-  run() {
-    const args = (this.runForm.value["args"] != null && this.runForm.value["args"].length > 0)
+  submitRun() {
+    const command = <string>this.sysSvc.appConfigData.pythonCmd ;
+    const fltStr = "";
+    const remotejsonfld = "";
+
+    const args : string[] = [];
+    args.push(`${<string>this.sysSvc.appConfigData.localNapcomDir}/${<string>this.sysSvc.appConfigData.jobSubmitCmd}`);
+    args.push(`${<string>this.sysSvc.appConfigData.anlHost}`);
+    args.push(`${<string>this.sysSvc.appConfigData.anlUser}`);
+    args.push(`${<string>this.sysSvc.appConfigData.anlNodeCluster}`);
+    args.push(`${<string>this.sysSvc.appConfigData.anlPwd}`);
+    args.push(`${<string>this.sysSvc.appConfigData.localNapcomDir}`);
+    args.push(`${<string>this.sysSvc.appConfigData.remoteNapcomDir}`);
+    args.push(`${<string>this.sysSvc.appConfigData.workingDirectory}`);
+    args.push(`${fltStr}`);
+    args.push(`${remotejsonfld}`);
+    args.push(`${<string>this.sysSvc.appConfigData.localUpdapsacDir}`);
+    args.push(`${<string>this.sysSvc.appConfigData.remoteUpdapsacDir}`);
+    args.push(`${<string>this.sysSvc.appConfigData.maxNumberOfRuns}`);
+
+    this.run(command, args);
+  }
+
+  uploadNapcomFiles() {
+    const command = <string>this.sysSvc.appConfigData.pythonCmd ;
+
+    const args : string[] = [];
+    args.push(`${<string>this.sysSvc.appConfigData.localNapcomDir}/${<string>this.sysSvc.appConfigData.sendNapcomCmd}`);
+    args.push(`${<string>this.sysSvc.appConfigData.anlHost}`);
+    args.push(`${<string>this.sysSvc.appConfigData.anlUser}`);
+    args.push(`${<string>this.sysSvc.appConfigData.anlNodeCluster}`);
+    args.push(`${<string>this.sysSvc.appConfigData.anlPwd}`);
+    args.push(`${<string>this.sysSvc.appConfigData.localNapcomDir}`);
+    args.push(`${<string>this.sysSvc.appConfigData.remoteNapcomDir}`);
+    args.push(`${<string>this.sysSvc.appConfigData.napcomExt}`);
+    args.push(`${<string>this.sysSvc.appConfigData.workingDirectory}`);
+
+    this.run(command, args);
+  }
+
+  uploadUpdapsFiles() {
+    const command = <string>this.sysSvc.appConfigData.pythonCmd ;
+
+    const args : string[] = [];
+    args.push(`${<string>this.sysSvc.appConfigData.localUpdapsacDir}/${<string>this.sysSvc.appConfigData.sendUpdapsCmd}`);
+    args.push(`${<string>this.sysSvc.appConfigData.anlHost}`);
+    args.push(`${<string>this.sysSvc.appConfigData.anlUser}`);
+    args.push(`${<string>this.sysSvc.appConfigData.anlNodeCluster}`);
+    args.push(`${<string>this.sysSvc.appConfigData.anlPwd}`);
+    args.push(`${<string>this.sysSvc.appConfigData.localUpdapsacDir}`);
+    args.push(`${<string>this.sysSvc.appConfigData.remoteUpdapsacDir}`);
+    args.push(`${<string>this.sysSvc.appConfigData.updapsacExt}`);
+
+    this.run(command, args);
+  }
+
+
+  checkConnection() {
+    const command = <string>this.sysSvc.appConfigData.pythonCmd ;
+
+    const args : string[] = [];
+    args.push(`${<string>this.sysSvc.appConfigData.localNapcomDir}/${<string>this.sysSvc.appConfigData.checkConnectionCmd}`);
+    args.push(`${<string>this.sysSvc.appConfigData.anlHost}`);
+    args.push(`${<string>this.sysSvc.appConfigData.anlUser}`);
+    args.push(`${<string>this.sysSvc.appConfigData.anlNodeCluster}`);
+    args.push(`${<string>this.sysSvc.appConfigData.anlPwd}`);
+
+    this.run(command, args);
+  }
+
+
+  runCommand() {
+    // Args can be entered in a comma separated list.  They need to be split and passed as an array for spawn.
+    const args : any[]  = (this.runForm.value["args"] != null && this.runForm.value["args"].length > 0)
       ? this.runForm.value["args"].split(",")
       : [];
-    this.scriptService.runScript(this.runForm.value["command"], args)
-      .then((dat: ScriptReturn) => {
-        this.runForm.patchValue({results: dat.data});
-        this.runForm.patchValue({code: dat.code});
-      }).catch(err => {
-        this.runForm.patchValue({results: err});
-        this.runForm.patchValue({code: ""});
-      });
+
+    this.run(<string>this.runForm.value["command"], args);
   }
 
 
-  /**
-   * Called to store the data.  Returns a promise.
-   */
-  uploadnapcomfiles() {
-    const command = this.anlForm.value["PythonEnv"] +
-        " '" + this.anlForm.value["localNAPCOMfld"] + "/sendNAPCOMfiles.py' '" +
-        this.anlForm.value["ANLHost"] + "' '" +
-        this.anlForm.value["anl_user"] + "' '" +
-        this.anlForm.value["ANLNodeCluster"] + "' '" +
-        this.anlForm.value["ANLpwd"] + "' '" +
-        this.anlForm.value["localNAPCOMfld"] + "' '" +
-        this.anlForm.value["remoteNAPCOMfld"] + "' '" +
-        this.anlForm.value["ext"] + "' '" +
-        this.anlForm.value["NAPCOMDataDir"] + "'"
+  run(command: string, args: any[]) {
 
-    // console.log(command)
-    this.scriptService.runScript2(command)
-        .then((dat: ScriptReturn) => {
-          this.runForm.patchValue({results: dat.data});
-          this.runForm.patchValue({code: dat.code});
-        }).catch(err => {
+    // Create a new instance of the run script
+    this.runScript = this.scriptService.create();
+    this.runScript.run(command, args, (dat: string) => {
+
+      // Callback updates live results
+      const patchVal = <string>this.runForm.value["liveResults"] + dat;
+      this.runForm.patchValue({liveResults: patchVal});
+
+    }).then((dat: ScriptReturn) => {
+
+      // Valid completion displays the results
+      this.runForm.patchValue({results: dat.data});
+      this.runForm.patchValue({code: dat.code});
+
+    }).catch(err => {
+
+      // Error displays the returned error
       this.runForm.patchValue({results: err});
       this.runForm.patchValue({code: ""});
+
     });
   }
 
-
-
-  /**
-   * Called to store the data.  Returns a promise.
-   */
-  uploadupdapsfiles() {
-    const command = this.anlForm.value["PythonEnv"] +
-        " '" + this.anlForm.value["localNAPCOMfld"] + "/sendUPDAPSfiles.py' '" +
-        this.anlForm.value["ANLHost"] + "' '" +
-        this.anlForm.value["anl_user"] + "' '" +
-        this.anlForm.value["ANLNodeCluster"] + "' '" +
-        this.anlForm.value["ANLpwd"] + "' '" +
-        this.anlForm.value["localUPDAPSACfld"] + "' '" +
-        this.anlForm.value["remoteUPDAPSACfld"] + "' '" +
-        this.anlForm.value["ext2"] + "'"
-
-    // console.log(command)
-    this.scriptService.runScript2(command)
-        .then((dat: ScriptReturn) => {
-          this.runForm.patchValue({results: dat.data});
-          this.runForm.patchValue({code: dat.code});
-        }).catch(err => {
-      this.runForm.patchValue({results: err});
-      this.runForm.patchValue({code: ""});
-    });
+  cancel() {
+    this.runScript.cancel();
   }
 
-
-
-  /**
-   * Called to store the data.  Returns a promise.
-   */
-  checkconnection() {
-    const command = this.anlForm.value["PythonEnv"] +
-        " '" + this.anlForm.value["localNAPCOMfld"] + "/checkconnection.py' '" +
-        this.anlForm.value["ANLHost"] + "' '" +
-        this.anlForm.value["anl_user"] + "' '" +
-        this.anlForm.value["ANLNodeCluster"] + "' '" +
-        this.anlForm.value["ANLpwd"] + "'"
-
-    // console.log(command)
-    this.scriptService.runScript2(command)
-        .then((dat: ScriptReturn) => {
-          this.runForm.patchValue({results: dat.data});
-          this.runForm.patchValue({code: dat.code});
-        }).catch(err => {
-      this.runForm.patchValue({results: err});
-      this.runForm.patchValue({code: ""});
-    });
+  clear() {
+    this.runForm.patchValue({results: ''});
+    this.runForm.patchValue({code: ''});
+    this.runForm.patchValue({liveResults: ''});
   }
 
-
-
-
-
+  onTabChanged(event) {
+    this.clear();
+  }
 }

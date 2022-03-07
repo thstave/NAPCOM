@@ -17,7 +17,6 @@ export class SidebarMenuComponent {
   constructor(private systemConfigService:SystemConfigService) {console.log("sidebar"); }
 
   setAction( action: SidenavAction) {
-    console.log("event");
     this.newSidenavAction.emit(action);
   }
 

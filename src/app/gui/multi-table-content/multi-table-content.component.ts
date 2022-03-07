@@ -28,7 +28,6 @@ export class MultiTableContentComponent implements OnInit {
 
   ngOnInit(): void {
     this._tableCnt = this.tables.length;
-    console.log(`table size ${this.tables.length}`);
   }
 
   ngAfterViewInit() {
@@ -52,8 +51,10 @@ export class MultiTableContentComponent implements OnInit {
   }
 
   reload(pos:number) {
-    this.jsonSvc.csvAsJsonNoHeader(`${this.systemConfigService.workingDirectory}/${this.table(pos).fileName}`)
+    console.log("reload");
+    this.jsonSvc.csvAsJson(`${this.systemConfigService.workingDirectory}/${this.table(pos).fileName}`)
       .then( json => {
+        console.log("reload then");
         this.table(pos).setJsonData(json);
         this.tableRefreshSubject.next(this.table(pos).fileName);
       });

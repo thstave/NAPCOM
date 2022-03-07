@@ -1,0 +1,17 @@
+<form [formGroup]="connectForm" novalidate>
+  <mat-form-field>
+    <input matInput placeholder="ANL Host" formControlName="anlHost">
+  </mat-form-field>
+
+  <mat-form-field>
+    <input matInput placeholder="ANL User" formControlName="anlUser">
+  </mat-form-field>
+
+  <mat-form-field>
+    <input matInput placeholder="ANL Node Cluster" formControlName="anlNodeCluster">
+  </mat-form-field>
+
+  <mat-form-field>
+    <input matInput placeholder="ANL Password" formControlName="anlPwd" type="password">
+  </mat-form-field>
+</form>

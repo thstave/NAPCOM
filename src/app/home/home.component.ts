@@ -34,7 +34,6 @@ export class HomeComponent implements OnInit {
     const dialogRef = this.dialog.open(CopyDirComponent, dialogConfig);
 
     dialogRef.afterClosed().subscribe(result => {
-      console.dir(result);
       if (result.loadFlag) {
         this.openDialog();
       }

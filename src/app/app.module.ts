@@ -25,6 +25,8 @@ import { MultiTableContentComponent } from './gui/multi-table-content/multi-tabl
 import {HomeComponent} from "./home/home.component";
 import { RunScriptComponent } from './gui/dialogs/run-script/run-script.component';
 import {CopyDirComponent} from "./gui/dialogs/copy-dir/copy-dir.component";
+import { PythonConfigComponent } from './gui/dialogs/load-new/python-config/python-config.component';
+import { ConnectionComponent } from './gui/dialogs/load-new/connection/connection.component';
 
 @NgModule({
   declarations: [
@@ -39,7 +41,9 @@ import {CopyDirComponent} from "./gui/dialogs/copy-dir/copy-dir.component";
     SingleTableContentComponent,
     MultiTableContentComponent,
     HomeComponent,
-    RunScriptComponent],
+    RunScriptComponent,
+    PythonConfigComponent,
+    ConnectionComponent],
 
   imports: [
     HttpClientModule,

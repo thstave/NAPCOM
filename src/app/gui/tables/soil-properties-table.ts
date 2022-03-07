@@ -2,6 +2,7 @@ import {IFieldAttributes} from "./i-json-table-data";
 import {RunDataService} from "../../service/run-data.service";
 import {AbstractJsonTableData} from "./abstract-json-table-data";
 import {SystemConfigService} from "../../service/system-config.service";
+import {MatTableDataSource} from "@angular/material/table";
 
 export class SoilPropertiesTable extends AbstractJsonTableData {
 
@@ -29,7 +30,7 @@ export class SoilPropertiesTable extends AbstractJsonTableData {
 
     this.heading = "Soil Properties";
     this.fileName = configService.fileName('SoilProperties');
-    this.isTableEditable = true;
+    this.isTableEditable = false;
     this.usePaging = false;
     this.rowCount = 6;
     this.noHeading = false;
@@ -39,7 +40,7 @@ export class SoilPropertiesTable extends AbstractJsonTableData {
   //  We have to rebuild the table data.
   setJsonData(json) {
     this.runDataService.runData.soilProperties = json;
-    this.initialize(<any[]>this.runDataService.runData.soilProperties);
     this.relateAttributes(this.attributes);
+    this.dataSource = new MatTableDataSource([...json]);
   }
 }
