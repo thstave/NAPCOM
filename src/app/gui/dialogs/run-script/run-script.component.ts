@@ -1,8 +1,9 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {ScriptReturn, ScriptService} from "../../../electron/services";
 import {RunScript} from "../../../electron/services/run-script";
 import {SystemConfigService} from "../../../service/system-config.service";
+import {DataFileConfigComponent} from "../load-new/data-file-config/data-file-config.component";
 
 @Component({
   selector: 'app-run-script',
@@ -10,6 +11,7 @@ import {SystemConfigService} from "../../../service/system-config.service";
   styleUrls: ['./run-script.component.scss']
 })
 export class RunScriptComponent implements OnInit {
+  @ViewChild('liveupdate') private liveUpdateElement: ElementRef;
   runForm: FormGroup;
   anlForm: FormGroup;
 
@@ -125,6 +127,7 @@ export class RunScriptComponent implements OnInit {
       // Callback updates live results
       const patchVal = <string>this.runForm.value["liveResults"] + dat;
       this.runForm.patchValue({liveResults: patchVal});
+      this.keepAtBottom();
 
     }).then((dat: ScriptReturn) => {
 
@@ -153,5 +156,13 @@ export class RunScriptComponent implements OnInit {
 
   onTabChanged(event) {
     this.clear();
+  }
+
+  keepAtBottom(): void {
+    try {
+      this.liveUpdateElement.nativeElement.scrollTop = this.liveUpdateElement.nativeElement.scrollHeight;
+    } catch(err) {
+      console.log(err);
+    }
   }
 }

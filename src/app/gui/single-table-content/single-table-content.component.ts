@@ -48,6 +48,7 @@ export class SingleTableContentComponent implements OnInit {
     this.jsonSvc.csvAsJson(this.systemConfigService.workingDirectory + "/" + this.table.fileName)
       .then( json => {
         console.log("reload then");
+        console.log(json);
         this.table.setJsonData(json);
         // Trigger data refresh
         this.tableRefreshSubject.next(this.table.fileName);

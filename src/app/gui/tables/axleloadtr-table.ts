@@ -35,6 +35,7 @@ export class AxleloadTrTable extends AbstractJsonTableData {
 
   //  We have to rebuild the table data.
   setJsonData(json) {
+    this.jsonData = json;
     this.runDataService.runData.axleLoadTr = json;
     this.buildAttributes();
     this.dataSource = new MatTableDataSource([...json]);

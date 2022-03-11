@@ -138,4 +138,12 @@ export class MainAppComponent {
     return data;
   }
 
+  directoryLoaded() {
+    return this.configService.directoryDefined();
+  }
+
+  currentDirectory() {
+    return this.configService.workingDirectory;
+  }
+
 }

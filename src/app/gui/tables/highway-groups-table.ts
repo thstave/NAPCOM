@@ -36,6 +36,7 @@ export class HighwayGroupsTable extends AbstractJsonTableData {
 
   //  We have to rebuild the table data.
   setJsonData(json) {
+    this.jsonData = json;
     this.runDataService.runData.highwayGroups = json;
     this.relateAttributes(this.attributes);
     this.dataSource = new MatTableDataSource([...json]);

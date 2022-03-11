@@ -40,6 +40,7 @@ export class JsonTableComponent implements OnInit {
   constructor() {}
 
   ngOnInit(): void {
+    console.log("ngOnInit");
     this.refreshSubscription = this.refreshEvent.subscribe((fileNm) => this.refresh(fileNm));
     this.displayedColumns = this.table.schema;
     this.attributes = this.table.fieldAttributes;
@@ -57,6 +58,7 @@ export class JsonTableComponent implements OnInit {
    * be able to query its view for the initialized paginator.
    */
   ngAfterViewInit() {
+    console.log("ngAfterInit");
     if ( this.usePaging) {
       this.dataSource.paginator = this.paginator;
       this.dataSource.data = this.table.jsonData;
@@ -122,7 +124,8 @@ export class JsonTableComponent implements OnInit {
   }
 
   refresh(fileNm: string) {
-
+    console.log("refresh");
+    console.log(this.table.jsonData);
     if (this.table.fileName === fileNm) {
       this.attributes = this.table.fieldAttributes;
 

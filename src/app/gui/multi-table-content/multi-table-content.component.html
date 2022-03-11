@@ -10,7 +10,7 @@
           <button mat-flat-button (click)="reload(pos)">Reload</button>
         </div>
       </div>
-      <app-json-table class="w-100"
+      <app-json-table class="w-100 d-flex flex-column"
                       [table]="table(pos)"
                       [maxTableHeight]="maxTableHeight"
                       [refreshEvent]="tableRefreshSubject.asObservable()">

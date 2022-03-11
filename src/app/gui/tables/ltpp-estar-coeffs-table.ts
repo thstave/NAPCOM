@@ -46,6 +46,7 @@ export class LtppEstarCoeffsTable extends AbstractJsonTableData {
 
   //  We have to rebuild the table data.
   setJsonData(json) {
+    this.jsonData = json;
     this.runDataService.runData.estarCoeffs = json;
     this.relateAttributes(this.attributes);
     this.dataSource = new MatTableDataSource([...json]);

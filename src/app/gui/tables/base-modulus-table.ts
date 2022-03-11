@@ -35,9 +35,9 @@ export class BaseModulusTable extends AbstractJsonTableData {
 
   //  We have to rebuild the table data.
   setJsonData(json) {
-    console.log("base setJsonData");
+    this.jsonData = json;
     this.runDataService.runData.baseModulus = json;
-    this.relateAttributes(this.attributes);
     this.dataSource = new MatTableDataSource([...json]);
+    this.relateAttributes(this.attributes);
   }
 }

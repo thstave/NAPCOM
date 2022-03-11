@@ -39,6 +39,7 @@ export class SoilPropertiesTable extends AbstractJsonTableData {
 
   //  We have to rebuild the table data.
   setJsonData(json) {
+    this.jsonData = json;
     this.runDataService.runData.soilProperties = json;
     this.relateAttributes(this.attributes);
     this.dataSource = new MatTableDataSource([...json]);

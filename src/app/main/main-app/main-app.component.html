@@ -1,8 +1,11 @@
 <mat-toolbar>
-  <button mat-icon-button (click)="sideBarToggle()" aria-label="Example icon-button with menu icon">
+  <button mat-icon-button (click)="sideBarToggle()">
     <mat-icon>menu</mat-icon>
   </button>
   <span class="h-center">NAPCOM</span>
+  <span class="header-current-directory" *ngIf="directoryLoaded()">
+    {{currentDirectory()}}
+  </span>
 </mat-toolbar>
 
 <mat-sidenav-container >
@@ -49,8 +52,7 @@
       [tables]="tableArray(sidenavContent.SubgradeDefaults)">
     </app-multi-table-content>
 
-    <app-run-script *ngSwitchCase="sidenavContent.Run" class="w-100"></app-run-script>
-    <app-run-script *ngSwitchCase="sidenavContent.ANLSettings" class="w-100"></app-run-script>
+    <app-run-script *ngSwitchCase="sidenavContent.Run" class="w-100 d-flex flex-column"></app-run-script>
 
     <app-home class="content" *ngSwitchDefault></app-home>
 

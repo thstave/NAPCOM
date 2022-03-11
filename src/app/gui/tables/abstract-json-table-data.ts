@@ -21,7 +21,6 @@ export abstract class AbstractJsonTableData  implements IJsonTableData {
   }
 
   protected initialize(jsonData:any[]) {
-    console.log("intialization");
     this.jsonData = jsonData;
     // extract titles from first record. We are using JSON titles as our identifiers.
     this.schema = Object.keys(jsonData[0]);
@@ -29,7 +28,6 @@ export abstract class AbstractJsonTableData  implements IJsonTableData {
   }
 
   protected relateAttributes(attributes: IFieldAttributes[]){
-    console.log("relateAttributes");
     this.fieldAttributes = attributes;
     // Add the title name to the field attributes colId
     let i = 0 ;

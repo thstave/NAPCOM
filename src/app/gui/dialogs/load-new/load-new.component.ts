@@ -38,6 +38,7 @@ export class LoadNewComponent implements OnInit {
    */
   save() {
     this.analysisComponent.save().then(obj => {
+      this.systemConfigService.workingDirectory = this.displayDirectory;
       return this.dataComponent.save();
     }).then( fileData => {
       this.runSvc.runData = fileData;

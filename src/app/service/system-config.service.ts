@@ -67,6 +67,10 @@ export class SystemConfigService {
     return dir + this.fileName(tableName);
   }
 
+  public directoryDefined() : boolean {
+    return (this._workingDirectory === undefined) ? false : true ;
+  }
+
   public get workingDirectory() : string {
     return (this._workingDirectory === undefined) ? this.defaultDataDirectory : this._workingDirectory;
   }

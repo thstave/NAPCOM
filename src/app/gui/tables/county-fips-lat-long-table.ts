@@ -39,6 +39,7 @@ export class CountyFipsLatLongTable extends AbstractJsonTableData {
 
   //  We have to rebuild the table data.
   setJsonData(json) {
+    this.jsonData = json;
     this.runDataService.runData.countyFips = json;
     this.relateAttributes(this.attributes);
     this.dataSource = new MatTableDataSource([...json]);

@@ -32,3 +32,8 @@ mat-sidenav-content {
 app-single-table-content {
   overflow: hidden;
 }
+
+.header-current-directory {
+  text-align: right;
+  flex:auto;
+}

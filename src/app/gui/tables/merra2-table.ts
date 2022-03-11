@@ -45,6 +45,7 @@ export class Merra2Table extends AbstractJsonTableData {
 
   //  We have to rebuild the table data.
   setJsonData(json) {
+    this.jsonData = json;
     this.runDataService.runData.merra2List = json;
     this.relateAttributes(this.attributes);
     this.dataSource = new MatTableDataSource([...json]);
