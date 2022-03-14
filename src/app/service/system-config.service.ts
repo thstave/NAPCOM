@@ -23,7 +23,7 @@ export class SystemConfigService {
     anlHost: "login1.arrow.tracc.anl.gov",
     anlUser: "ac.mkutay",
     anlNodeCluster: "batch",
-    anlPwd: "",
+    anlPwd: "Dummy",
     pythonCmd: "/usr/local/opt/python@3.8/bin/python3",
     jobSubmitCmd: "submitJOBs.py",
     sendNapcomCmd:"sendNAPCOMfiles.py",

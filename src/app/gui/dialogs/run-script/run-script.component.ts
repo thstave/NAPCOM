@@ -104,6 +104,10 @@ export class RunScriptComponent implements OnInit {
     args.push(`${<string>this.sysSvc.appConfigData.anlNodeCluster}`);
     args.push(`${<string>this.sysSvc.appConfigData.anlPwd}`);
 
+    console.log(command + " "+ args)
+    console.log(`pwd = ${<string>this.sysSvc.appConfigData.anlPwd}`);
+    console.log(this.sysSvc.directoryDefined());
+
     this.run(command, args);
   }
 

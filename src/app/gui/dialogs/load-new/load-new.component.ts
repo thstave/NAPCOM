@@ -6,6 +6,8 @@ import {AnalysisParamsComponent} from "./analysis-params/analysis-params.compone
 import {SystemAccessService} from "../../../electron/services";
 import {SystemConfigService} from "../../../service/system-config.service";
 import {Subject} from "rxjs";
+import {ConnectionComponent} from "./connection/connection.component";
+import {PythonConfigComponent} from "./python-config/python-config.component";
 
 @Component({
   selector: 'app-load-new',
@@ -15,16 +17,18 @@ import {Subject} from "rxjs";
 export class LoadNewComponent implements OnInit {
   @ViewChild(DataFileConfigComponent) dataComponent: DataFileConfigComponent;
   @ViewChild(AnalysisParamsComponent) analysisComponent: AnalysisParamsComponent;
+  @ViewChild(ConnectionComponent) connectionComponent: ConnectionComponent;
+  @ViewChild(PythonConfigComponent) pythonConfigComponent: PythonConfigComponent;
 
   reloadSubject: Subject<void> = new Subject<void>();
   displayDirectory : string ;
 
   constructor(
-    private runSvc: RunDataService,
-    private sysAccessService: SystemAccessService,
-    private systemConfigService: SystemConfigService,
-    private dialogRef: MatDialogRef<LoadNewComponent>,
-    @Inject(MAT_DIALOG_DATA) data) {
+      private runSvc: RunDataService,
+      private sysAccessService: SystemAccessService,
+      private systemConfigService: SystemConfigService,
+      private dialogRef: MatDialogRef<LoadNewComponent>,
+      @Inject(MAT_DIALOG_DATA) data) {
   }
 
   ngOnInit() {
@@ -39,7 +43,14 @@ export class LoadNewComponent implements OnInit {
   save() {
     this.analysisComponent.save().then(obj => {
       this.systemConfigService.workingDirectory = this.displayDirectory;
-      return this.dataComponent.save();
+      const promises = [];
+
+      promises.push( this.dataComponent.save());
+      promises.push( this.analysisComponent.save());
+      promises.push( this.connectionComponent.save());
+      promises.push( this.pythonConfigComponent.save());
+
+      return Promise.all(promises);
     }).then( fileData => {
       this.runSvc.runData = fileData;
       return this.systemConfigService.writeConfigData();
@@ -79,4 +90,3 @@ export class LoadNewComponent implements OnInit {
     });
   }
 }
-
