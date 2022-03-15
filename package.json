@@ -63,6 +63,7 @@
     "font-awesome": "4.7.0",
     "fs-extra": "10.0.0",
     "material-icons": "1.10.6",
+    "ng-multiselect-dropdown": "^0.3.8",
     "node-xlsx": "0.21.0",
     "npm-check-updates": "12.3.0",
     "rxjs": "7.5.4",

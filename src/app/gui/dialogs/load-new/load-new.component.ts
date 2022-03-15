@@ -45,14 +45,14 @@ export class LoadNewComponent implements OnInit {
       this.systemConfigService.workingDirectory = this.displayDirectory;
       const promises = [];
 
-      promises.push( this.dataComponent.save());
       promises.push( this.analysisComponent.save());
       promises.push( this.connectionComponent.save());
       promises.push( this.pythonConfigComponent.save());
+      promises.push( this.dataComponent.save());
 
       return Promise.all(promises);
     }).then( fileData => {
-      this.runSvc.runData = fileData;
+      this.runSvc.runData = fileData[3];
       return this.systemConfigService.writeConfigData();
     }).then( obj => {
       this.dialogRef.close();
@@ -73,12 +73,10 @@ export class LoadNewComponent implements OnInit {
     this.systemConfigService.readConfigData().then(() => {
       this.reloadSubject.next();
     });
-
   }
 
   directory() {
     const folder = this.systemConfigService.workingDirectory;
-    console.log(folder);
     this.sysAccessService.browse(folder).then ( path => {
       if (!(path.canceled || path.filePaths.length === 0)){
         this.systemConfigService.workingDirectory = path.filePaths[0];

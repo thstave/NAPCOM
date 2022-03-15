@@ -36,11 +36,52 @@ export class RunScriptComponent implements OnInit {
         });
     }
 
+    checkRun() {
+        const command = "'" + <string>this.sysSvc.appConfigData.pythonCmd + "'";
+
+        const args: string[] = [];
+        args.push("'" + `${<string>this.sysSvc.appConfigData.localNapcomDir}/${<string>this.sysSvc.appConfigData.checkJOBSCmd}` + "'");
+        args.push("'" + `${<string>this.sysSvc.appConfigData.anlHost}` + "'");
+        args.push("'" + `${<string>this.sysSvc.appConfigData.anlUser}` + "'");
+        args.push("'" + `${<string>this.sysSvc.appConfigData.anlNodeCluster}` + "'");
+        args.push("'" + `${<string>this.sysSvc.appConfigData.anlPwd}` + "'");
+
+        let cumentry = command;
+        for (let entry of args) {
+            cumentry = cumentry + " " + entry;
+        }
+        // console.log(cumentry)
+        this.runForm.patchValue({
+            results: "--> Checking  active runs: " +
+                " '" + `${<string>this.sysSvc.appConfigData.anlHost}` + "' " +
+                "'" + `${<string>this.sysSvc.appConfigData.anlUser}` + "'"
+        });
+
+        this.run(command, args);
+    }
+
+    cancelRun() {
+        const command = "'" + <string>this.sysSvc.appConfigData.pythonCmd + "'";
+
+        const args: string[] = [];
+        args.push("'" + `${<string>this.sysSvc.appConfigData.localNapcomDir}/${<string>this.sysSvc.appConfigData.cancelJOBSCmd}` + "'");
+        args.push("'" + `${<string>this.sysSvc.appConfigData.anlHost}` + "'");
+        args.push("'" + `${<string>this.sysSvc.appConfigData.anlUser}` + "'");
+        args.push("'" + `${<string>this.sysSvc.appConfigData.anlNodeCluster}` + "'");
+        args.push("'" + `${<string>this.sysSvc.appConfigData.anlPwd}` + "'");
+
+        // let cumentry = command;
+        // for (let entry of args) {
+        //     cumentry = cumentry + " " + entry;
+        // }
+        // console.log(cumentry)
+        this.runForm.patchValue({results: "--> Cancel Run"});
+
+        this.run(command, args);
+    }
 
     submitRun() {
         const command = "'" + <string>this.sysSvc.appConfigData.pythonCmd + "'";
-        const fltStr = "";
-        const remotejsonfld = "";
 
         const args: string[] = [];
         args.push("'" + `${<string>this.sysSvc.appConfigData.localNapcomDir}/${<string>this.sysSvc.appConfigData.jobSubmitCmd}` + "'");
@@ -50,12 +91,19 @@ export class RunScriptComponent implements OnInit {
         args.push("'" + `${<string>this.sysSvc.appConfigData.anlPwd}` + "'");
         args.push("'" + `${<string>this.sysSvc.appConfigData.localNapcomDir}` + "'");
         args.push("'" + `${<string>this.sysSvc.appConfigData.remoteNapcomDir}` + "'");
-        args.push("'" + `${<string>this.sysSvc.appConfigData.workingDirectory}` + "'");
-        args.push("'" + `${fltStr}` + "'");
-        args.push("'" + `${remotejsonfld}` + "'");
+        args.push("'" + `${<string>this.sysSvc.workingDirectory}` + "'");
+        args.push("'" + `${<string>this.sysSvc.appConfigData.fltstr}` + "'");
+        args.push("'" + `${<string>this.sysSvc.appConfigData.remotejsonfld}` + "'");
         args.push("'" + `${<string>this.sysSvc.appConfigData.localUpdapsacDir}` + "'");
         args.push("'" + `${<string>this.sysSvc.appConfigData.remoteUpdapsacDir}` + "'");
         args.push("'" + `${<string>this.sysSvc.appConfigData.maxNumberOfRuns}` + "'");
+
+        // let cumentry = command;
+        // for (let entry of args) {
+        //     cumentry = cumentry + " " + entry;
+        // }
+        // console.log(cumentry)
+        this.runForm.patchValue({results: "--> Submit Run"});
 
         this.run(command, args);
     }
@@ -72,9 +120,10 @@ export class RunScriptComponent implements OnInit {
         args.push("'" + `${<string>this.sysSvc.appConfigData.localNapcomDir}` + "'");
         args.push("'" + `${<string>this.sysSvc.appConfigData.remoteNapcomDir}` + "'");
         args.push("'" + `${<string>this.sysSvc.appConfigData.napcomExt}` + "'");
-        args.push("'" + `${<string>this.sysSvc.appConfigData.workingDirectory}` + "'");
+        args.push("'" + `${<string>this.sysSvc.workingDirectory}` + "'");
 
-        console.log(command + " " + args)
+        // console.log(command + " " + args)
+        this.runForm.patchValue({results: "--> Upload NAPCOM Files"});
 
         this.run(command, args);
     }
@@ -92,7 +141,8 @@ export class RunScriptComponent implements OnInit {
         args.push("'" + `${<string>this.sysSvc.appConfigData.remoteUpdapsacDir}` + "'");
         args.push("'" + `${<string>this.sysSvc.appConfigData.updapsacExt}` + "'");
 
-        console.log(command + " " + args)
+        // console.log(command + " " + args)
+        this.runForm.patchValue({results: "--> Upload UPDAPS Files"});
 
         this.run(command, args);
     }
@@ -108,7 +158,12 @@ export class RunScriptComponent implements OnInit {
         args.push("'" + `${<string>this.sysSvc.appConfigData.anlNodeCluster}` + "'");
         args.push("'" + `${<string>this.sysSvc.appConfigData.anlPwd}` + "'");
 
-        console.log(command + " " + args)
+        // console.log(command + " " + args)
+        this.runForm.patchValue({
+            results: "--> Check Connection:" +
+                " '" + `${<string>this.sysSvc.appConfigData.anlHost}` + "' " +
+                "'" + `${<string>this.sysSvc.appConfigData.anlUser}` + "'"
+        });
 
         this.run(command, args);
     }
@@ -124,7 +179,12 @@ export class RunScriptComponent implements OnInit {
     }
 
 
-    run(command: string, args: any[]) {
+    run(command
+            :
+            string, args
+            :
+            any[]
+    ) {
 
         // Create a new instance of the run script
         this.runScript = this.scriptService.create();
@@ -164,7 +224,9 @@ export class RunScriptComponent implements OnInit {
         this.clear();
     }
 
-    keepAtBottom(): void {
+    keepAtBottom()
+        :
+        void {
         try {
             this.liveUpdateElement.nativeElement.scrollTop = this.liveUpdateElement.nativeElement.scrollHeight;
         } catch (err) {

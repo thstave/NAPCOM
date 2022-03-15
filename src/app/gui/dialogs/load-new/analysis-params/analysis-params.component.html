@@ -1,20 +1,39 @@
-
 <form [formGroup]="loadForm" novalidate>
 
-  <mat-form-field>
-    <input matInput placeholder="Analysis Period" formControlName="period">
-  </mat-form-field>
+    <mat-form-field>
+        <input matInput placeholder="Analysis Period" formControlName="period">
+    </mat-form-field>
 
-  <mat-form-field>
-    <input matInput placeholder="Selected States" formControlName="states">
-  </mat-form-field>
+    <mat-form-field>
+        <input matInput placeholder="Selected States" formControlName="states">
+    </mat-form-field>
 
-  <mat-form-field>
-    <input matInput placeholder="Selected Highway Types" formControlName="highwayTypes">
-  </mat-form-field>
+    <mat-form-field>
+        <input matInput placeholder="Selected Highway Types" formControlName="highwayTypes">
+    </mat-form-field>
 
-  <mat-form-field>
-    <input matInput placeholder="Selected Pavement Types" formControlName="pavementTypes">
-  </mat-form-field>
+    <mat-form-field>
+        <input matInput placeholder="Selected Pavement Types" formControlName="pavementTypes">
+    </mat-form-field>
+
+    <mat-divider [inset]="true" class="mb-4 mt-4"></mat-divider>
+
+
+    <mat-form-field>
+    <textarea matInput placeholder="HPMS Data Filter String" formControlName="fltstr" cdkTextareaAutosize
+              cdkAutosizeMinRows="10"></textarea>
+    </mat-form-field>
+
+    <mat-form-field>
+        <input matInput placeholder="UPDAPS Input JSON Folder (at ANL) " formControlName="remotejsonfld">
+    </mat-form-field>
+
+    <mat-form-field>
+        <input matInput placeholder="Maximum Number of Runs " formControlName="maxNumberOfRuns">
+    </mat-form-field>
+
+
+    <mat-divider [inset]="true" class="mb-4 mt-4"></mat-divider>
+
 
 </form>
