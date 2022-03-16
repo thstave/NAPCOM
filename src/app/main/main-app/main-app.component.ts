@@ -82,7 +82,7 @@ export class MainAppComponent {
         data = new HighwayGroupsTable(this.runDataService, this.configService);
         break;
       }
-      case SidenavAction.SpectraCountyData: {
+      case SidenavAction.CountyData: {
         data = new CountyFipsLatLongTable(this.runDataService, this.configService);
         break;
       }
@@ -117,7 +117,7 @@ export class MainAppComponent {
         data.push(new HmaGradationVolumetricsTable(this.runDataService, this.configService));
         break;
       }
-      case SidenavAction.AxleLoad: {
+      case SidenavAction.AxleLoadSpectra: {
         data.push(new AxleloadSiTable(this.runDataService, this.configService));
         data.push(new AxleloadTaTable(this.runDataService, this.configService));
         data.push(new AxleloadTrTable(this.runDataService, this.configService));

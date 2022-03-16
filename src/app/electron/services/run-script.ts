@@ -36,7 +36,12 @@ export class RunScript {
     return new Promise((resolve, reject) => {
 
       let returnData = "";
-      this._child = this.electronService.childProcess.spawn(command, (args as any[]), {shell: true});
+      // this._child = this.electronService.childProcess.spawn(command, (args as any[]), {shell: true});
+      this._child = this.electronService.childProcess.spawn(command, (args as any[]), {shell: true,
+        cwd: process.cwd(),
+        detached: true,
+        stdio: 'inherit' //feed all child process logging into parent process
+      });
 
       this._child.stdout.on('data', (data) => {
         returnData = data;

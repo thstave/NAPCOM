@@ -97,12 +97,14 @@ export class RunScriptComponent implements OnInit {
         args.push("'" + `${<string>this.sysSvc.appConfigData.localUpdapsacDir}` + "'");
         args.push("'" + `${<string>this.sysSvc.appConfigData.remoteUpdapsacDir}` + "'");
         args.push("'" + `${<string>this.sysSvc.appConfigData.maxNumberOfRuns}` + "'");
+        args.push("'" + `${<string>this.sysSvc._appConfigFileName}` + "'");
 
-        // let cumentry = command;
-        // for (let entry of args) {
-        //     cumentry = cumentry + " " + entry;
-        // }
-        // console.log(cumentry)
+        let cumentry = command;
+        for (let entry of args) {
+            cumentry = cumentry + " " + entry;
+        }
+        console.log(cumentry)
+
         this.runForm.patchValue({results: "--> Submit Run"});
 
         this.run(command, args);
@@ -179,12 +181,7 @@ export class RunScriptComponent implements OnInit {
     }
 
 
-    run(command
-            :
-            string, args
-            :
-            any[]
-    ) {
+    run(command: string, args: any[]) {
 
         // Create a new instance of the run script
         this.runScript = this.scriptService.create();

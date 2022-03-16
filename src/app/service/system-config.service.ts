@@ -8,7 +8,7 @@ export class SystemConfigService {
 
     private _workingDirectory: string = undefined;
 
-    private _appConfigFileName = "app_config.json";
+    _appConfigFileName = "app_config.json";
     // System Default Directory
     defaultDataDirectory = '../Data';
     dataHasBeenRead = false;
@@ -54,7 +54,8 @@ export class SystemConfigService {
         fltstr: "state_code == 26 and surface_type == 2 and base_type == 2 and cracking_percent > 30.0 and thickness_flexible < 8.0 and year_last_improv < 2008 and year_last_improv > 1998",
         remotejsonfld: "/mnt/lustre/arrow/home/ac.mkutay/updapsruns/forMI/",
         cancelJOBSCmd: "cancelJOBs.py",
-        checkJOBSCmd: "checkJOBs.py"
+        checkJOBSCmd: "checkJOBs.py",
+        computenumHPMSsecscmd: "checknumHPMSsecs.py"
     };
 
     appConfigData = undefined;

@@ -28,12 +28,12 @@
 
     <app-multi-table-content
       class="content"
-      *ngSwitchCase="sidenavContent.AxleLoad"
+      *ngSwitchCase="sidenavContent.AxleLoadSpectra"
       [heading]="'Axle Load Spectra'"
-      [tables]="tableArray(sidenavContent.AxleLoad)">
+      [tables]="tableArray(sidenavContent.AxleLoadSpectra)">
     </app-multi-table-content>
 
-    <app-single-table-content class="content" *ngSwitchCase="sidenavContent.SpectraCountyData" [table]="tableData(sidenavContent.SpectraCountyData)"></app-single-table-content>
+    <app-single-table-content class="content" *ngSwitchCase="sidenavContent.CountyData" [table]="tableData(sidenavContent.CountyData)"></app-single-table-content>
     <app-single-table-content class="content" *ngSwitchCase="sidenavContent.MERRA2List" [table]="tableData(sidenavContent.MERRA2List)"></app-single-table-content>
 
     <app-multi-table-content

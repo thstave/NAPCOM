@@ -1,27 +1,58 @@
 <form [formGroup]="loadForm" novalidate>
-
+    <!-- <mat-form-field appearance="fill">-->
     <mat-form-field>
-        <input matInput placeholder="Analysis Period" formControlName="period">
+        <mat-label>States</mat-label>
+        <mat-select [formControl]="selectedstates" multiple>
+            <mat-option>All</mat-option>
+            <mat-option *ngFor="let state of states" [value]="state">{{state}}</mat-option>
+        </mat-select>
     </mat-form-field>
 
     <mat-form-field>
-        <input matInput placeholder="Selected States" formControlName="states">
+        <mat-label>Surface Types</mat-label>
+        <mat-select [formControl]="selectedsurfacetypes" multiple>
+            <mat-option>All</mat-option>
+            <mat-option *ngFor="let surfacetype of surfacetypes" [value]="surfacetype">{{surfacetype}}</mat-option>
+        </mat-select>
     </mat-form-field>
 
     <mat-form-field>
-        <input matInput placeholder="Selected Highway Types" formControlName="highwayTypes">
+        <mat-label>Functional Classes</mat-label>
+        <mat-select [formControl]="selectedfunctionalclass" multiple>
+            <mat-option>All</mat-option>
+            <mat-option *ngFor="let funcclass of functionalclasses" [value]="funcclass">{{funcclass}}</mat-option>
+        </mat-select>
     </mat-form-field>
 
-    <mat-form-field>
-        <input matInput placeholder="Selected Pavement Types" formControlName="pavementTypes">
-    </mat-form-field>
+
+    <!--
+        <mat-form-field>
+           <input matInput placeholder="Select States" formControlName="states">
+       </mat-form-field>
+
+       <mat-form-field>
+           <input matInput placeholder="Selected Highway Types" formControlName="highwayTypes">
+       </mat-form-field>
+
+       <mat-form-field>
+           <input matInput placeholder="Selected Pavement Types" formControlName="pavementTypes">
+       </mat-form-field>
+    -->
+
+    <div class="button-wrapper d-flex justify-content-between">
+        <button mat-flat-button color="primary" (click)="updatefilterstring()">Update Filter String</button>
+        <button mat-flat-button color="primary" (click)="checknumberofHPMSsections()">Filter HPMS Sections</button>
+
+    </div>
 
     <mat-divider [inset]="true" class="mb-4 mt-4"></mat-divider>
 
+    <!-- <h4>HPMS Data Filter</h4> -->
 
     <mat-form-field>
-    <textarea matInput placeholder="HPMS Data Filter String" formControlName="fltstr" cdkTextareaAutosize
-              cdkAutosizeMinRows="10"></textarea>
+     <textarea matInput placeholder="HPMS Data Filter String" formControlName="fltstr" cdkTextareaAutosize
+               cdkAutosizeMinRows="10"> </textarea>
+
     </mat-form-field>
 
     <mat-form-field>
@@ -34,6 +65,10 @@
 
 
     <mat-divider [inset]="true" class="mb-4 mt-4"></mat-divider>
+
+    <mat-form-field>
+        <input matInput placeholder="Analysis Period" formControlName="period">
+    </mat-form-field>
 
 
 </form>
