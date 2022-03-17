@@ -184,7 +184,7 @@ export class AnalysisParamsComponent implements OnInit {
         const args: string[] = [];
         args.push("'" + `${<string>this.sysSvc.appConfigData.localNapcomDir}/${<string>this.sysSvc.appConfigData.computenumHPMSsecscmd}` + "'");
         args.push("'" + `${<string>this.sysSvc.workingDirectory}` + "'");
-        args.push("'" + `${<string>this.sysSvc.filePath('HPMSData')}` + "'");
+        args.push("'" + `${<string>this.sysSvc.fileName('HPMSData')}` + "'");
         args.push("'" + `${<string>this.loadForm.value["fltstr"]}` + "'");
 
         let cumentry = command;
