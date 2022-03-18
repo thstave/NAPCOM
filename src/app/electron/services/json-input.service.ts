@@ -17,6 +17,7 @@ export class JsonInputService {
    */
   csvAsJson( fileNm:string) {
     return this.electronService.csv().fromFile(fileNm);
+
   }
 
   /**

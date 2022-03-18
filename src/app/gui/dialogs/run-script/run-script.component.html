@@ -1,16 +1,80 @@
+<!--                <ngx-charts-pie-chart-->
+<!--                        [results]="[23,23,23]"-->
+<!--                        [legend]="true"-->
+<!--                        [legendTitle]="'Product Sale Report'"-->
+<!--                        [view]="[1000,300]"-->
+<!--                        [labels]="true" >-->
+<!--                </ngx-charts-pie-chart>-->
+
+<!--&lt;!&ndash;<plotly-plot [data]="graph.data" [layout]="graph.layout"></plotly-plot>&ndash;&gt;-->
+<!--<table>-->
+<!--    <tr>-->
+<!--        <td>-->
+<!--            <ngx-charts-pie-chart [results]="productSales"-->
+<!--                                  [view]="view"-->
+<!--                                  [scheme]="colorScheme"-->
+<!--                                  [gradient]="gradient"-->
+<!--                                  [legend]="showLegend"-->
+<!--                                  [legendPosition]="legendPosition"-->
+<!--                                  [labels]="showLabels"-->
+<!--                                  [doughnut]="isDoughnut">-->
+<!--            </ngx-charts-pie-chart>-->
+<!--        </td>-->
+<!--    </tr>-->
+
+<!--</table>-->
+
+
 <form [formGroup]="runForm" class="d-flex flex-column w-75 h-100" novalidate>
     <mat-tab-group (selectedTabChange)="onTabChanged($event)">
         <mat-tab label="Submit Jobs">
 
             <!-- PYTHON Submit -->
-            <mat-card class="w-75">
+            <mat-card class="w-auto">
                 <div class="button-wrapper d-flex justify-content-between">
                     <button mat-flat-button color="primary" (click)="submitRun()">Submit Run</button>
-                    <button mat-flat-button color="primary" (click)="checkRun()">Check Run</button>
                     <button mat-flat-button color="primary" (click)="cancelRun()">Cancel Run</button>
                 </div>
             </mat-card>
+
+            <mat-form-field class="run-live-update">
+                    <textarea #submitupdate matInput placeholder="Submit Update" formControlName="livesubmitResults"
+                              cdkAutosizeMinRows="10" cdkTextareaAutosize readonly></textarea>
+            </mat-form-field>
+            <mat-card class="w-auto">
+                <div class="button-wrapper d-flex justify-content-between">
+                    <ngx-charts-pie-chart [results]="productSales"
+                                          [view]="view"
+                                          [gradient]="gradient"
+                                          [legend]="showLegend"
+                                          [labels]="showLabels"
+                                          [doughnut]="isDoughnut">
+                    </ngx-charts-pie-chart>
+                </div>
+            </mat-card>
+
+
         </mat-tab>
+
+        <mat-tab label="Job Status">
+
+            <!-- PYTHON Submit -->
+            <mat-card class="w-auto">
+                <div class="button-wrapper d-flex justify-content-between">
+                    <button mat-flat-button color="primary" (click)="checkRun()">Check Active Jobs</button>
+                    <button mat-flat-button color="primary" (click)="getUPDAPSRunStatus()">Get Run Status</button>
+                </div>
+            </mat-card>
+
+            <mat-form-field class="run-live-update">
+                    <textarea #runstatusupdate matInput placeholder="Results" formControlName="runstatusupdateResults"
+                              cdkAutosizeMinRows="10" cdkTextareaAutosize readonly></textarea>
+            </mat-form-field>
+
+
+        </mat-tab>
+
+
         <mat-tab label="Connection and Uploads">
             <!-- ANL Settings -->
             <mat-card>
@@ -41,6 +105,22 @@
 
             </mat-card>
 
+            <mat-divider [inset]="true" class="mb-4 mt-4"></mat-divider>
+
+            <mat-form-field>
+                <input matInput placeholder="Return Code" formControlName="code" readonly>
+            </mat-form-field>
+
+            <mat-form-field>
+                    <textarea matInput placeholder="Results" formControlName="results" cdkTextareaAutosize
+                              cdkAutosizeMinRows="4" readonly></textarea>
+            </mat-form-field>
+
+            <mat-form-field class="run-live-update">
+                    <textarea #liveupdate matInput placeholder="Live Update" formControlName="liveResults"
+                              cdkAutosizeMinRows="10" readonly></textarea>
+            </mat-form-field>
+
             <div class="button-wrapper d-flex justify-content-between">
                 <button mat-flat-button color="primary" (click)="runCommand()">Run</button>
                 <button mat-flat-button color="primary" (click)="clear()">Clear</button>
@@ -49,22 +129,6 @@
 
         </mat-tab>
     </mat-tab-group>
-
-    <mat-divider [inset]="true" class="mb-4 mt-4"></mat-divider>
-
-    <mat-form-field>
-        <input matInput placeholder="Return Code" formControlName="code" readonly>
-    </mat-form-field>
-
-    <mat-form-field>
-                    <textarea matInput placeholder="Results" formControlName="results" cdkTextareaAutosize
-                              cdkAutosizeMinRows="4" readonly></textarea>
-    </mat-form-field>
-
-    <mat-form-field class="run-live-update">
-                    <textarea #liveupdate matInput placeholder="Live Update" formControlName="liveResults"
-                              cdkAutosizeMinRows="10" readonly></textarea>
-    </mat-form-field>
 
 
 </form>

@@ -55,7 +55,10 @@ export class SystemConfigService {
         remotejsonfld: "/mnt/lustre/arrow/home/ac.mkutay/updapsruns/forMI/",
         cancelJOBSCmd: "cancelJOBs.py",
         checkJOBSCmd: "checkJOBs.py",
-        computenumHPMSsecscmd: "checknumHPMSsecs.py"
+        computenumHPMSsecscmd: "checknumHPMSsecs.py",
+        NAPCOMstatustxtfname: "NAPCOM_run_status.txt",
+        UPDAPSstatustxtfname: "UPDAPS_run_status.txt",
+        getUPDAPSRunStatusCmd: "checkUPDAPSrunstatus.py"
     };
 
     appConfigData = undefined;

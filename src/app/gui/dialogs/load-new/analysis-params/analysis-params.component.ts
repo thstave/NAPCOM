@@ -193,15 +193,15 @@ export class AnalysisParamsComponent implements OnInit {
         }
         console.log(cumentry)
 
-        this.loadForm.patchValue({
-            maxNumberOfRuns: "--> Computing number of HPMS sections for " +
-                "'" + `${<string>this.loadForm.value["fltstr"]}` + "'"
-        });
+        // this.loadForm.patchValue({
+        //     maxNumberOfRuns: "--> Computing number of HPMS sections for " +
+        //         "'" + `${<string>this.loadForm.value["fltstr"]}` + "'"
+        // });
 
-        this.run(command, args);
+        this.runinterminal(command, args);
     }
 
-    run(command
+    runinterminal(command
             :
             string, args
             :
@@ -214,17 +214,21 @@ export class AnalysisParamsComponent implements OnInit {
 
             // Callback updates live results
             const patchVal = <string>this.loadForm.value["maxNumberOfRuns"] + dat;
-            this.loadForm.patchValue({liveResults: patchVal});
+            console.log("maxNumberOfRuns: " + patchVal)
+            // this.loadForm.patchValue({liveResults: patchVal});
 
         }).then((dat: ScriptReturn) => {
 
             // Valid completion displays the results
-            this.loadForm.patchValue({maxNumberOfRuns: dat.data});
+            // this.loadForm.patchValue({maxNumberOfRuns: dat.data});
+            console.log("at the end - maxNumberOfRuns: " + dat.data)
 
         }).catch(err => {
 
             // Error displays the returned error
-            this.loadForm.patchValue({maxNumberOfRuns: err});
+            // this.loadForm.patchValue({maxNumberOfRuns: err});
+            console.log("Error in computing maxNumberOfRuns: " + err)
+
 
         });
     }
