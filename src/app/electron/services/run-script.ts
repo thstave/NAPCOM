@@ -61,6 +61,32 @@ export class RunScript {
     });
   }
 
+  public runNoLive(command: string, args, callback?:(dat: string) => any) : Promise<any> {
+
+    return new Promise((resolve, reject) => {
+
+      let returnData = "";
+      // this._child = this.electronService.childProcess.spawn(command, (args as any[]), {shell: true});
+      this._child = this.electronService.childProcess.spawn(command, (args as any[]), {shell: true});
+
+      this._child.stdout.on('data', (data) => {
+        returnData = data;
+        if (callback) {
+          callback(<string>data);
+        }
+      });
+
+      this._child.on('error', (error) => {
+        reject(error);
+      });
+
+      this._child.on('close', (code) => {
+        const rtrn : ScriptReturn = { 'code':code,'data':returnData};
+        resolve(rtrn);
+      });
+    });
+  }
+
   cancel() {
     if ( this._child ) {
       // kill the live updates

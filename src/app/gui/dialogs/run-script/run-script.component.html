@@ -33,7 +33,6 @@
             <mat-card class="w-auto">
                 <div class="button-wrapper d-flex justify-content-between">
                     <button mat-flat-button color="primary" (click)="submitRun()">Submit Run</button>
-                    <button mat-flat-button color="primary" (click)="cancelRun()">Cancel Run</button>
                 </div>
             </mat-card>
 
@@ -41,17 +40,6 @@
                     <textarea #submitupdate matInput placeholder="Submit Update" formControlName="livesubmitResults"
                               cdkAutosizeMinRows="10" cdkTextareaAutosize readonly></textarea>
             </mat-form-field>
-            <mat-card class="w-auto">
-                <div class="button-wrapper d-flex justify-content-between">
-                    <ngx-charts-pie-chart [results]="productSales"
-                                          [view]="view"
-                                          [gradient]="gradient"
-                                          [legend]="showLegend"
-                                          [labels]="showLabels"
-                                          [doughnut]="isDoughnut">
-                    </ngx-charts-pie-chart>
-                </div>
-            </mat-card>
 
 
         </mat-tab>
@@ -61,8 +49,10 @@
             <!-- PYTHON Submit -->
             <mat-card class="w-auto">
                 <div class="button-wrapper d-flex justify-content-between">
-                    <button mat-flat-button color="primary" (click)="checkRun()">Check Active Jobs</button>
                     <button mat-flat-button color="primary" (click)="getUPDAPSRunStatus()">Get Run Status</button>
+                    <button mat-flat-button color="primary" (click)="checkRun()">Check Active Jobs</button>
+                    <button mat-flat-button color="primary" (click)="cancelRun()">Cancel Run</button>
+
                 </div>
             </mat-card>
 
@@ -70,6 +60,23 @@
                     <textarea #runstatusupdate matInput placeholder="Results" formControlName="runstatusupdateResults"
                               cdkAutosizeMinRows="10" cdkTextareaAutosize readonly></textarea>
             </mat-form-field>
+
+            <mat-card class="w-auto">
+                <div class="button-wrapper d-flex justify-content-between">
+                    <!--                    <ngx-charts-pie-chart [results]="piechartdata"-->
+                    <!--                                          [view]="view"-->
+                    <!--                                          [gradient]="gradient"-->
+                    <!--                                          [legend]="showLegend"-->
+                    <!--                                          [labels]="showLabels"-->
+                    <!--                                          [doughnut]="isDoughnut">-->
+                    <!--                    </ngx-charts-pie-chart>-->
+
+                    <ngx-charts-advanced-pie-chart [results]="piechartdata"
+                                                   [view]="view"
+                                                   [gradient]="gradient">
+                    </ngx-charts-advanced-pie-chart>
+                </div>
+            </mat-card>
 
 
         </mat-tab>

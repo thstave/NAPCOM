@@ -3,6 +3,7 @@ import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {ElectronService, ScriptReturn, ScriptService} from "../../../electron/services";
 import {RunScript} from "../../../electron/services/run-script";
 import {SystemConfigService} from "../../../service/system-config.service";
+import {Subject} from "rxjs";
 // import { ProductPieChartsComponent } from '../../../charts/product-pie-charts/product-pie-charts.component';
 // import { productSales, productSalesMulti} from '../../../data/products';
 
@@ -20,38 +21,28 @@ export class RunScriptComponent implements OnInit {
 
     runForm: FormGroup;
     anlForm: FormGroup;
+    update$: Subject<any> = new Subject();
 
-    productSales = [
+    piechartdata = [
         {
-            "name": "book",
-            "value": 5001
+            "name": "Error",
+            "value": 0
         }, {
-            "name": "graphic card",
-            "value": 7322
+            "name": "Complete",
+            "value": 0
         }, {
-            "name": "desk",
-            "value": 1726
-        }, {
-            "name": "laptop",
-            "value": 2599
-        }, {
-            "name": "monitor",
-            "value": 705
+            "name": "Incomplete",
+            "value": 100
+
         }
     ];
-    productSalesMulti: any[]
-
     view: any[] = [700, 370];
-
     // options
-    showLegend: boolean = true;
-    showLabels: boolean = true;
-
-    gradient: boolean = false;
-    isDoughnut: boolean = false;
-
-    legendPosition: string = 'below';
-
+    // showLegend: boolean = true;
+    // showLabels: boolean = true;
+    gradient: boolean = true;
+    // isDoughnut: boolean = false;
+    // legendPosition: string = 'below';
     colorScheme = {
         domain: ['#704FC4', '#4B852C', '#B67A3D', '#5B6FC8', '#25706F']
     };
@@ -97,6 +88,7 @@ export class RunScriptComponent implements OnInit {
         args.push("'" + `${<string>this.sysSvc.appConfigData.remoteNapcomDir}` + "'");
         args.push("'" + `${<string>this.sysSvc.workingDirectory}` + "'");
         args.push("'" + `${<string>this.sysSvc.appConfigData.remotejsonfld}` + "'");
+        this.run(command, args);
 
         // let cumentry = command;
         // for (let entry of args) {
@@ -105,17 +97,20 @@ export class RunScriptComponent implements OnInit {
         // console.log(cumentry)
 
         this.runForm.patchValue({
-            results: "--> Running " + `${<string>this.sysSvc.appConfigData.getUPDAPSRunStatusCmd}` +
-                " '" + `${<string>this.sysSvc.appConfigData.anlHost}` + "' " +
+            runstatusupdateResults: "--> Running " + `${<string>this.sysSvc.appConfigData.getUPDAPSRunStatusCmd}` +
+                " at '" + `${<string>this.sysSvc.appConfigData.anlHost}` + "' for user " +
                 "'" + `${<string>this.sysSvc.appConfigData.anlUser}` + "'"
-        });
+        });     //    Watch and read the status file
 
-        // this.run(command, args);
-
-        //    Watch and read the status file
         const fpath = `${<string>this.sysSvc.workingDirectory}` +
             '/' + `${<string>this.sysSvc.appConfigData.UPDAPSstatustxtfname}`;
         // this.electronService.fs.remove(fpath);
+        // this.readUPDAPSStatusfile(fpath);
+
+        this.watchstatusfile2(fpath);
+    }
+
+    readUPDAPSStatusfile(fpath) {
 
         // Read the file and compute the status statistics: number of complete, incomplete and error
         try {
@@ -125,15 +120,15 @@ export class RunScriptComponent implements OnInit {
                 var nerr = 0;
                 var array = this.electronService.fs.readFileSync(fpath).toString().split("\n");
                 for (let i in array) {
-                    console.log("Row - " + i + ":" + array[i]);
+                    // console.log("Row - " + i + ":" + array[i]);
                     var arri = array[i].split(",")
-                    console.log("Json:" + arri[0])
-                    console.log("Status:" + arri[1])
+                    // console.log("Json:" + arri[0])
+                    // console.log("Status:" + arri[1])
                     if (typeof arri[1] !== "undefined") {
-                        if (arri[1].includes("complete")) {
-                            ncompl++;
-                        } else if (arri[1].includes("incomplete")) {
+                        if (arri[1].includes("incomplete")) {
                             nincompl++;
+                        } else if (arri[1].includes("complete"))  {
+                            ncompl++;
                         } else if (arri[1].includes("error")) {
                             nerr++;
                         }
@@ -144,21 +139,45 @@ export class RunScriptComponent implements OnInit {
                 console.log("Number of error: " + nerr)
 
                 this.runForm.patchValue({runstatusupdateResults:
-                    "Number of completed: " + ncompl + "\n" +
-                    "Number of incomplete: " + nincompl + "\n" +
-                    "Number of error: " + nerr + "\n"
+                        "Number of completed: " + ncompl + "\n" +
+                        "Number of incomplete: " + nincompl + "\n" +
+                        "Number of error: " + nerr + "\n"
                 });
+
+                // var ntot = ncompl + nincompl + nerr;
+                // var pctot = ncompl/ntot*100;
+                // var pitot = nincompl/ntot*100;
+                // var petot = nerr/ntot*100;
+
+
+                // By updating data below, pie chart is supposed to be updated automatically
+                this.piechartdata = [
+                    {
+                        "name": "Error",
+                        "value": nerr
+                    }, {
+                        "name": "Complete",
+                        "value": ncompl
+                    }, {
+                        "name": "Incomplete",
+                        "value": nincompl
+                    }
+                ];
+
+                // update chart
+                this.piechartdata = [...this.piechartdata];
+
+                // // stop watching the file
+                // console.log("--> Stopped watching file: " + fpath)
+                // this.electronService.fs.unwatchFile(fpath);
+
+
             }
 
         } catch (err) {
             console.error(err)
         }
-
-
-        // this.watchstatusfile2(fpath);
-
     }
-
 
     checkRun() {
         const command = "'" + <string>this.sysSvc.appConfigData.pythonCmd + "'";
@@ -175,13 +194,14 @@ export class RunScriptComponent implements OnInit {
             cumentry = cumentry + " " + entry;
         }
         // console.log(cumentry)
+
         this.runForm.patchValue({
-            results: "--> Checking  active runs: " +
+            runstatusupdateResults: "--> Checking  active runs: " +
                 " '" + `${<string>this.sysSvc.appConfigData.anlHost}` + "' " +
                 "'" + `${<string>this.sysSvc.appConfigData.anlUser}` + "'"
         });
 
-        this.run(command, args);
+        this.runnolive(command, args);
 
 
         // console.log(NAPCOMstatustxt)
@@ -203,9 +223,9 @@ export class RunScriptComponent implements OnInit {
         //     cumentry = cumentry + " " + entry;
         // }
         // console.log(cumentry)
-        this.runForm.patchValue({results: "--> Cancel Run"});
+        this.runForm.patchValue({runstatusupdateResults: "--> Cancel Run"});
 
-        this.run(command, args);
+        this.runnolive(command, args);
 
         this.electronService.fs.unwatchFile(`${<string>this.sysSvc.workingDirectory}` + '/' + `${<string>this.sysSvc.appConfigData.NAPCOMstatustxtfname}`)
         this.electronService.fs.unwatchFile(`${<string>this.sysSvc.workingDirectory}` + '/' + `${<string>this.sysSvc.appConfigData.UPDAPSstatustxtfname}`)
@@ -273,6 +293,7 @@ export class RunScriptComponent implements OnInit {
 
                         // Specify the interval between each poll the file
                         interval: 3000,
+
                     },
                     (curr, prev) => {
                         console.log("\nThe file was edited");
@@ -281,23 +302,24 @@ export class RunScriptComponent implements OnInit {
                         console.log("Current Modified Time", curr.mtime);
 
                         const statustxt = this.electronService.fs.readFileSync(fpath, "utf8")
+                        // console.log("The contents of the " + fpath + " are:\n" + statustxt);
+                        // var idxno = statustxt.indexOf(",")
+                        // console.log(idxno)
 
-                        console.log("The contents of the " + fpath + " are:\n" + statustxt);
-                        var idxno = statustxt.indexOf(",")
 
-                        console.log(idxno)
                         // var idxno = statearri.slice(0, statustxt.indexOf("-"))
 
                         // this.runForm.patchValue({"livesubmitResults": statustxt});
                         // this.keepAtBottomsubmitupdate()
 
-                        // var idxno = NAPCOMstatustxt.indexOf("---> JOB SUBMISSION HAVE BEEN COMPLETED ")
-                        // console.log(idxno)
-                        // if (idxno > -1) {
-                        //     this.electronService.fs.unwatchFile(fpath)
-                        //     console.log("\n> File has been stopped watching");
-                        //
-                        // }
+                        var idxno = statustxt.indexOf("---> END <---")
+                        console.log(idxno)
+                        if (idxno > -1) {
+                            this.electronService.fs.unwatchFile(fpath)
+                            console.log("\n> File has been stopped watching");
+                            this.readUPDAPSStatusfile(fpath);
+                            console.log("\n> File has been read");
+                        }
 
                     }
                 );
@@ -421,6 +443,33 @@ export class RunScriptComponent implements OnInit {
     }
 
 
+    runnolive(command: string, args: any[]) {
+
+        // Create a new instance of the run script
+        this.runScript = this.scriptService.create();
+        this.runScript.runNoLive(command, args, (dat: string) => {
+
+            // Callback updates live results
+            const patchVal = dat;
+            this.runForm.patchValue({runstatusupdateResults: patchVal});
+            this.keepAtBottom();
+
+        }).then((dat: ScriptReturn) => {
+
+            // Valid completion displays the results
+            this.runForm.patchValue({runstatusupdateResults: dat.data});
+            // this.runForm.patchValue({code: dat.code});
+
+        }).catch(err => {
+
+            // Error displays the returned error
+            this.runForm.patchValue({runstatusupdateResults: err});
+            // this.runForm.patchValue({code: ""});
+
+        });
+    }
+
+
     run(command: string, args: any[]) {
 
         // Create a new instance of the run script
@@ -458,7 +507,8 @@ export class RunScriptComponent implements OnInit {
     }
 
     onTabChanged(event) {
-        this.clear();
+        // this.clear();
+
     }
 
     keepAtBottomsubmitupdate()

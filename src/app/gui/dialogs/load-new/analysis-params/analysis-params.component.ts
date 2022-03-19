@@ -210,12 +210,12 @@ export class AnalysisParamsComponent implements OnInit {
 
         // Create a new instance of the run script
         this.runScript = this.scriptService.create();
-        this.runScript.run(command, args, (dat: string) => {
+        this.runScript.runNoLive(command, args, (dat: string) => {
 
             // Callback updates live results
-            const patchVal = <string>this.loadForm.value["maxNumberOfRuns"] + dat;
+            const patchVal = dat;
             console.log("maxNumberOfRuns: " + patchVal)
-            // this.loadForm.patchValue({liveResults: patchVal});
+            this.loadForm.patchValue({maxNumberOfRuns: patchVal});
 
         }).then((dat: ScriptReturn) => {
 
