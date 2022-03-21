@@ -220,13 +220,13 @@ export class AnalysisParamsComponent implements OnInit {
         }).then((dat: ScriptReturn) => {
 
             // Valid completion displays the results
-            // this.loadForm.patchValue({maxNumberOfRuns: dat.data});
+            this.loadForm.patchValue({maxNumberOfRuns: dat.data});
             console.log("at the end - maxNumberOfRuns: " + dat.data)
 
         }).catch(err => {
 
             // Error displays the returned error
-            // this.loadForm.patchValue({maxNumberOfRuns: err});
+            this.loadForm.patchValue({maxNumberOfRuns: err});
             console.log("Error in computing maxNumberOfRuns: " + err)
 
 
