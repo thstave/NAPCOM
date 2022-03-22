@@ -48,8 +48,6 @@ export class RunScriptComponent implements OnInit {
     };
 
 
-
-
     private runScript: RunScript = undefined;
 
     constructor(private fb: FormBuilder,
@@ -71,6 +69,7 @@ export class RunScriptComponent implements OnInit {
             code: ["", []],
             liveResults: ["\n", []],
             livesubmitResults: ["\n", []],
+            estimatedruntime: ["\n", []],
             runstatusupdateResults: ["\n", []]
         });
     }
@@ -106,8 +105,38 @@ export class RunScriptComponent implements OnInit {
             '/' + `${<string>this.sysSvc.appConfigData.UPDAPSstatustxtfname}`;
         // this.electronService.fs.remove(fpath);
         // this.readUPDAPSStatusfile(fpath);
-
         this.watchstatusfile2(fpath);
+
+
+    }
+
+    readNAPCOMRemoteStatusfile(fpath) {
+
+        // Read the file and compute the status statistics: number of complete, incomplete and error
+        try {
+            if (this.electronService.fs.existsSync(fpath)) {
+                var array = this.electronService.fs.readFileSync(fpath).toString().split("\n");
+                for (let i in array) {
+                    // console.log("Row - " + i + ":" + array[i]);
+                    var arri = array[i].split(":")
+                    // console.log("Json:" + arri[0])
+                    // console.log("Status:" + arri[1])
+                    if (typeof arri[0] !== "undefined") {
+                        if (arri[0].includes("Estimated UPDAPS runtime (hrs)")) {
+                            var runtime = arri[1]
+                            console.log("Estimated UPDAPS runtime (hrs): " + runtime)
+                        }
+                    }
+                }
+                this.runForm.patchValue({
+                    estimatedruntime:
+                        "Estimated UPDAPS runtime (hrs): " + runtime + "\n"
+                });
+            }
+
+        } catch (err) {
+            console.error(err)
+        }
     }
 
     readUPDAPSStatusfile(fpath) {
@@ -127,7 +156,7 @@ export class RunScriptComponent implements OnInit {
                     if (typeof arri[1] !== "undefined") {
                         if (arri[1].includes("incomplete")) {
                             nincompl++;
-                        } else if (arri[1].includes("complete"))  {
+                        } else if (arri[1].includes("complete")) {
                             ncompl++;
                         } else if (arri[1].includes("error")) {
                             nerr++;
@@ -138,7 +167,8 @@ export class RunScriptComponent implements OnInit {
                 console.log("Number of incomplete: " + nincompl)
                 console.log("Number of error: " + nerr)
 
-                this.runForm.patchValue({runstatusupdateResults:
+                this.runForm.patchValue({
+                    runstatusupdateResults:
                         "Number of completed: " + ncompl + "\n" +
                         "Number of incomplete: " + nincompl + "\n" +
                         "Number of error: " + nerr + "\n"
@@ -201,7 +231,7 @@ export class RunScriptComponent implements OnInit {
                 "'" + `${<string>this.sysSvc.appConfigData.anlUser}` + "'"
         });
 
-        this.runnolive(command, args);
+        this.runnolive2(command, args);
 
 
         // console.log(NAPCOMstatustxt)
@@ -225,7 +255,7 @@ export class RunScriptComponent implements OnInit {
         // console.log(cumentry)
         this.runForm.patchValue({runstatusupdateResults: "--> Cancel Run"});
 
-        this.runnolive(command, args);
+        this.runnolive2(command, args);
 
         this.electronService.fs.unwatchFile(`${<string>this.sysSvc.workingDirectory}` + '/' + `${<string>this.sysSvc.appConfigData.NAPCOMstatustxtfname}`)
         this.electronService.fs.unwatchFile(`${<string>this.sysSvc.workingDirectory}` + '/' + `${<string>this.sysSvc.appConfigData.UPDAPSstatustxtfname}`)
@@ -260,7 +290,8 @@ export class RunScriptComponent implements OnInit {
 
         this.runForm.patchValue({results: "--> Submit Run"});
 
-        this.run(command, args);
+        this.runnolive1(command, args);
+
 
         //    Watch and read the status file
         const fpath = `${<string>this.sysSvc.workingDirectory}` +
@@ -271,6 +302,71 @@ export class RunScriptComponent implements OnInit {
         // const NAPCOMstatustxt = this.electronService.fs.readFileSync(fpath, 'utf-8');
         // this.runForm.patchValue({liveResults: NAPCOMstatustxt});
         // this.keepAtBottom();
+
+        this.runForm.patchValue({
+            estimatedruntime:
+                "Please wait, computing (this can take several minutes)... \n"
+        });
+        const fpath3 = `${<string>this.sysSvc.workingDirectory}` +
+            '/' + `${<string>this.sysSvc.appConfigData.NAPCOMstatusremotetxtfname}`;
+        // this.electronService.fs.remove(fpath);
+        // this.readUPDAPSStatusfile(fpath);
+        console.log("--> Will start watching:" + fpath3)
+        this.watchstatusfile3(fpath3);
+
+
+    }
+
+    watchstatusfile3(fpath: string) {
+
+        try {
+            //file exists
+            this.electronService.fs.watchFile(
+                // The name of the file to watch
+                fpath,
+                // The options parameter is used to modify the behaviour of the method
+                {
+                    // Specify the use of big integers in the Stats object
+                    bigint: false,
+
+                    // Specify if the process should continue as long as file is watched
+                    persistent: true,
+
+                    // Specify the interval between each poll the file
+                    interval: 3000,
+
+                },
+                (curr, prev) => {
+                    console.log("\n The file was edited: " + fpath + "\n");
+                    // Show the time when the file was modified
+                    console.log("Previous Modified Time", prev.mtime);
+                    console.log("Current Modified Time", curr.mtime);
+
+                    const statustxt = this.electronService.fs.readFileSync(fpath, "utf8")
+                    // console.log("The contents of the " + fpath + " are:\n" + statustxt);
+                    // var idxno = statustxt.indexOf(",")
+                    // console.log(idxno)
+
+                    // var idxno = statearri.slice(0, statustxt.indexOf("-"))
+
+                    // this.runForm.patchValue({"livesubmitResults": statustxt});
+                    // this.keepAtBottomsubmitupdate()
+
+                    var idxno = statustxt.indexOf("Estimated UPDAPS runtime (hrs)")
+                    console.log(idxno)
+                    if (idxno > -1) {
+                        this.electronService.fs.unwatchFile(fpath)
+                        console.log("\n> File has been stopped watching");
+                        this.readNAPCOMRemoteStatusfile(fpath);
+                        console.log("\n> File has been read:" + fpath);
+                    }
+
+                }
+            );
+        } catch (err) {
+            console.error(err)
+        }
+
 
     }
 
@@ -360,13 +456,13 @@ export class RunScriptComponent implements OnInit {
                 // console.log("The contents of the current file are:", NAPCOMstatustxt);
                 this.runForm.patchValue({"livesubmitResults": statustxt});
                 this.keepAtBottomsubmitupdate()
-                // var idxno = NAPCOMstatustxt.indexOf("---> JOB SUBMISSION HAVE BEEN COMPLETED ")
-                // console.log(idxno)
-                // if (idxno > -1) {
-                //     this.electronService.fs.unwatchFile(fpath)
-                //     console.log("\n> File has been stopped watching");
-                //
-                // }
+                var idxno = statustxt.indexOf("---> JOB SUBMISSION HAVE BEEN COMPLETED ")
+                console.log(idxno)
+                if (idxno > -1) {
+                    this.electronService.fs.unwatchFile(fpath)
+                    console.log("\n> File has been stopped watching");
+
+                }
 
             }
         );
@@ -439,11 +535,37 @@ export class RunScriptComponent implements OnInit {
             ? this.runForm.value["args"].split(",")
             : [];
 
-        this.run(<string>this.runForm.value["command"], args);
+        this.runnolive4(<string>this.runForm.value["command"], args);
     }
 
 
-    runnolive(command: string, args: any[]) {
+    runnolive1(command: string, args: any[]) {
+
+        // Create a new instance of the run script
+        this.runScript = this.scriptService.create();
+        this.runScript.runNoLive(command, args, (dat: string) => {
+
+            // Callback updates live results
+            const patchVal = dat;
+            this.runForm.patchValue({livesubmitResults: patchVal});
+            this.keepAtBottom();
+
+        }).then((dat: ScriptReturn) => {
+
+            // Valid completion displays the results
+            this.runForm.patchValue({livesubmitResults: dat.data});
+            // this.runForm.patchValue({code: dat.code});
+
+        }).catch(err => {
+
+            // Error displays the returned error
+            this.runForm.patchValue({livesubmitResults: err});
+            // this.runForm.patchValue({code: ""});
+
+        });
+    }
+
+    runnolive2(command: string, args: any[]) {
 
         // Create a new instance of the run script
         this.runScript = this.scriptService.create();
@@ -466,6 +588,24 @@ export class RunScriptComponent implements OnInit {
             this.runForm.patchValue({runstatusupdateResults: err});
             // this.runForm.patchValue({code: ""});
 
+        });
+    }
+
+    runnolive4(command: string, args: any[]) {
+
+        // Create a new instance of the run script
+        this.runScript = this.scriptService.create();
+        this.runScript.runNoLive(command, args, (dat: string) => {
+            // Callback updates live results
+            const patchVal = dat;
+            this.runForm.patchValue({results: patchVal});
+            this.keepAtBottom();
+        }).then((dat: ScriptReturn) => {
+            // Valid completion displays the results
+            this.runForm.patchValue({results: dat.data});
+        }).catch(err => {
+            // Error displays the returned error
+            this.runForm.patchValue({results: err});
         });
     }
 

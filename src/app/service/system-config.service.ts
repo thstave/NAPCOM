@@ -57,6 +57,7 @@ export class SystemConfigService {
         checkJOBSCmd: "checkJOBs.py",
         computenumHPMSsecscmd: "checknumHPMSsecs.py",
         NAPCOMstatustxtfname: "NAPCOM_run_status.txt",
+        NAPCOMstatusremotetxtfname: "NAPCOM_run_status_remote.txt",
         UPDAPSstatustxtfname: "UPDAPS_run_status.txt",
         getUPDAPSRunStatusCmd: "checkUPDAPSrunstatus.py"
     };

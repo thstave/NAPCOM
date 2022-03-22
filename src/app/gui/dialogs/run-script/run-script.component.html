@@ -35,6 +35,10 @@
                     <button mat-flat-button color="primary" (click)="submitRun()">Submit Run</button>
                 </div>
             </mat-card>
+            <mat-form-field class="run-live-update">
+                    <textarea matInput placeholder="Estimated runtime" formControlName="estimatedruntime"
+                              cdkAutosizeMinRows="1" cdkTextareaAutosize readonly></textarea>
+            </mat-form-field>
 
             <mat-form-field class="run-live-update">
                     <textarea #submitupdate matInput placeholder="Submit Update" formControlName="livesubmitResults"
