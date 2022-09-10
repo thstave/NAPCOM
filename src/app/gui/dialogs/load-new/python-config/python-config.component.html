@@ -6,18 +6,18 @@
     -->
 
     <mat-form-field>
-        <input matInput placeholder="Python Command" formControlName="pythonCmd">
+        <input matInput placeholder="Local Python Command" formControlName="pythonCmd">
     </mat-form-field>
 
-    <mat-form-field>
-        <input matInput placeholder="Job Submit Command" formControlName="jobSubmitCmd">
-    </mat-form-field>
+    <!--    <mat-form-field>-->
+    <!--        <input matInput placeholder="Job Submit Command" formControlName="jobSubmitCmd">-->
+    <!--    </mat-form-field>-->
 
-    <mat-divider [inset]="true" class="mb-4 mt-4"></mat-divider>
+    <!--    <mat-divider [inset]="true" class="mb-4 mt-4"></mat-divider>-->
 
-    <mat-form-field>
-        <input matInput placeholder="Send NAPCOM Command" formControlName="sendNapcomCmd">
-    </mat-form-field>
+    <!--    <mat-form-field>-->
+    <!--        <input matInput placeholder="Send NAPCOM Command" formControlName="sendNapcomCmd">-->
+    <!--    </mat-form-field>-->
 
     <mat-form-field>
         <input matInput placeholder="Local NAPCOM Directory" formControlName="localNapcomDir">
@@ -27,11 +27,11 @@
         <input matInput placeholder="Remote NAPCOM Directory" formControlName="remoteNapcomDir">
     </mat-form-field>
 
-    <mat-divider [inset]="true" class="mb-4 mt-4"></mat-divider>
+    <!--    <mat-divider [inset]="true" class="mb-4 mt-4"></mat-divider>-->
 
-    <mat-form-field>
-        <input matInput placeholder="Send UPDAPS Command" formControlName="sendUpdapsCmd">
-    </mat-form-field>
+    <!--    <mat-form-field>-->
+    <!--        <input matInput placeholder="Send UPDAPS Command" formControlName="sendUpdapsCmd">-->
+    <!--    </mat-form-field>-->
 
     <mat-form-field>
         <input matInput placeholder="Local UPDAPSAC Directory" formControlName="localUpdapsacDir">
@@ -41,10 +41,31 @@
         <input matInput placeholder="Remote UPDAPSAC Directory" formControlName="remoteUpdapsacDir">
     </mat-form-field>
 
-    <mat-divider [inset]="true" class="mb-4 mt-4"></mat-divider>
+    <mat-form-field>
+        <input matInput placeholder="Local UPDAPSPCC Directory" formControlName="localUpdapsPCCDir">
+    </mat-form-field>
 
     <mat-form-field>
-        <input matInput placeholder="Check Connection Command" formControlName="checkConnectionCmd">
+        <input matInput placeholder="Remote UPDAPSPCC Directory" formControlName="remoteUpdapsPCCDir">
+    </mat-form-field>
+
+
+    <mat-card>
+        <div class="button-wrapper d-flex justify-content-between">
+            <button mat-flat-button color="primary" (click)="uploadNapcomFiles()">Upload NAPCOM++ codes</button>
+            <button mat-flat-button color="primary" (click)="uploadNapcomData()">Upload NAPCOM++ data</button>
+        </div>
+
+        <div class="button-wrapper d-flex justify-content-between">
+            <button mat-flat-button color="primary" (click)="uploadUpdapsACFiles()">Upload UPDAPSAC codes</button>
+            <button mat-flat-button color="primary" (click)="uploadUpdapsPCCFiles()">Upload UPDAPSPCC codes</button>
+        </div>
+    </mat-card>
+
+    <mat-form-field class="run-live-update">
+                    <textarea #liveupdate1 matInput placeholder="Status"
+                              formControlName="liveResults1"
+                              cdkAutosizeMinRows="5" readonly cdkTextareaAutosize></textarea>
     </mat-form-field>
 
 </form>

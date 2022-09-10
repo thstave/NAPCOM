@@ -28,11 +28,13 @@ export class SystemConfigService {
         jobSubmitCmd: "submitJOBs.py",
         sendNapcomCmd: "sendNAPCOMfiles.py",
         localNapcomDir: "/Users/kutay/My Drive/_Docs/My Algorithms/_UPDAPS2Codes/_NAPCOMPlus/Deploy/",
-        remoteNapcomDir: "/mnt/lustre/arrow/home/ac.mkutay/updapscodes/napcomplus/",
+        remoteNapcomDir: "/scratch/ac.mkutay/updapscodes2/napcomplus/",
         napcomExt: "*.py",
         sendUpdapsCmd: "sendUPDAPSfiles.py",
-        localUpdapsacDir: "/Users/kutay/My Drive/_Docs/My Algorithms/_UPDAPS2Codes/PythonCode_VECD_4Calibration",
-        remoteUpdapsacDir: "/mnt/lustre/arrow/home/ac.mkutay/updapscodes/updapsac_vecd_3pt/",
+        localUpdapsacDir: "/Users/kutay/My Drive/_Docs/My Algorithms/_UPDAPS2Codes/_UPDAPSAC_latest/",
+        remoteUpdapsacDir: "/scratch/ac.mkutay/updapscodes2/updapsac_vecd_3pt/",
+        localUpdapsPCCDir: "/Users/kutay/My Drive/_Docs/My Algorithms/_UPDAPS2Codes/_UPDAPSPCC_latest/",
+        remoteUpdapsPCCDir: "/scratch/ac.mkutay/updapscodes2/updapspcc/",
         updapsacExt: "*.py, *.pkl, *.xlsx",
         checkConnectionCmd: "checkconnection.py",
         fileNames: {
@@ -57,9 +59,12 @@ export class SystemConfigService {
         checkJOBSCmd: "checkJOBs.py",
         computenumHPMSsecscmd: "checknumHPMSsecs.py",
         NAPCOMstatustxtfname: "NAPCOM_run_status.txt",
-        NAPCOMstatusremotetxtfname: "NAPCOM_run_status_remote.txt",
+        NAPCOMstatusremotetxtfname: "NAPCOM_runtime_estimate.txt",
         UPDAPSstatustxtfname: "UPDAPS_run_status.txt",
-        getUPDAPSRunStatusCmd: "checkUPDAPSrunstatus.py"
+        getUPDAPSRunStatusCmd: "checkUPDAPSrunstatus.py",
+        computeSharesCmd: "computeSharesAtANL.py",
+        sendremoteCmd: "send_remote_cmd.py"
+
     };
 
     appConfigData = undefined;

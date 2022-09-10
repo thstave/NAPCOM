@@ -10,7 +10,7 @@
 @include mat-core();
 
 // mat-palette accepts $palette-name, main, lighter and darker variants
-$app-theme-primary: mat.define-palette(mat.$green-palette, 700, 500, 900);
+$app-theme-primary: mat.define-palette(mat.$blue-palette, 700, 500, 900);
 $app-theme-accent: mat.define-palette(mat.$pink-palette);
 
 
@@ -26,7 +26,7 @@ $app-theme: mat.define-light-theme((
 ));
 
 // Color palette for the nav bar
-$nav-theme-primary: mat.define-palette(mat.$green-palette, 700, 500, 900);
+$nav-theme-primary: mat.define-palette(mat.$blue-palette, 700, 500, 900);
 $nav-theme-accent: mat.define-palette(mat.$pink-palette);
 
 $nav-theme: mat.define-dark-theme((
@@ -37,7 +37,7 @@ $nav-theme: mat.define-dark-theme((
 ));
 
 // Color palette for the editing (just reversing the color palette)
-$edt-theme-primary: mat.define-palette(mat.$green-palette, 700, 500, 900);
+$edt-theme-primary: mat.define-palette(mat.$blue-palette, 700, 500, 900);
 $edt-theme-accent: mat.define-palette(mat.$pink-palette);
 
 $edt-theme: mat.define-light-theme((

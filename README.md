@@ -1,5 +1,5 @@
 # Introduction
-Source Code for NAPCOM.  An Electron based application for the analasys of highway longevity. 
+Source Code for NAPCOM.  An Electron based application for the analysis of relative responsibilities of various vehicle types for pavement damage . 
 
 Currently the application can build a multi-platform desktop application for Windows, MAC, and linux.  Web-based application is not currently supported.
 

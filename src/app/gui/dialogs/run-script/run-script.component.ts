@@ -209,6 +209,41 @@ export class RunScriptComponent implements OnInit {
         }
     }
 
+
+    computeShares() {
+        const command = "'" + <string>this.sysSvc.appConfigData.pythonCmd + "'";
+
+        const args: string[] = [];
+        args.push("'" + `${<string>this.sysSvc.appConfigData.localNapcomDir}/${<string>this.sysSvc.appConfigData.computeSharesCmd}` + "'");
+        args.push("'" + `${<string>this.sysSvc.appConfigData.anlHost}` + "'");
+        args.push("'" + `${<string>this.sysSvc.appConfigData.anlUser}` + "'");
+        args.push("'" + `${<string>this.sysSvc.appConfigData.anlNodeCluster}` + "'");
+        args.push("'" + `${<string>this.sysSvc.appConfigData.anlPwd}` + "'");
+        args.push("'" + `${<string>this.sysSvc.appConfigData.localNapcomDir}` + "'");
+        args.push("'" + `${<string>this.sysSvc.appConfigData.remoteNapcomDir}` + "'");
+        args.push("'" + `${<string>this.sysSvc.workingDirectory}` + "'");
+        args.push("'" + `${<string>this.sysSvc.appConfigData.remotejsonfld}` + "'");
+        args.push("'" + `${<string>this.sysSvc.appConfigData.fileNames.HPMSData}` + "'");
+
+        let cumentry = command;
+        for (let entry of args) {
+            cumentry = cumentry + " " + entry;
+        }
+        console.log(cumentry)
+
+        this.runForm.patchValue({
+            runstatusupdateResults: "--> Checking  active runs: " +
+                " '" + `${<string>this.sysSvc.appConfigData.anlHost}` + "' " +
+                "'" + `${<string>this.sysSvc.appConfigData.anlUser}` + "'"
+        });
+
+        this.runnolive2(command, args);
+
+
+        // console.log(NAPCOMstatustxt)
+
+    }
+
     checkRun() {
         const command = "'" + <string>this.sysSvc.appConfigData.pythonCmd + "'";
 
@@ -237,6 +272,8 @@ export class RunScriptComponent implements OnInit {
         // console.log(NAPCOMstatustxt)
 
     }
+
+
 
     cancelRun() {
         const command = "'" + <string>this.sysSvc.appConfigData.pythonCmd + "'";
