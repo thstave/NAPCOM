@@ -1,3 +1,10 @@
+<mat-card>
+    <div class="button-wrapper d-flex justify-content-between">
+        <button mat-flat-button color="primary" (click)="checkConnection()">Check Connection</button>
+    </div>
+</mat-card>
+
+
 <form [formGroup]="connectForm" novalidate>
     <mat-form-field>
         <input matInput placeholder="ANL Host" formControlName="anlHost">
@@ -15,14 +22,9 @@
         <input matInput placeholder="ANL Password" formControlName="anlPwd" type="password">
     </mat-form-field>
 
-    <mat-card>
-        <div class="button-wrapper d-flex justify-content-between">
-            <button mat-flat-button color="primary" (click)="checkConnection()">Check Connection</button>
-        </div>
-    </mat-card>
 
-    <mat-form-field class="run-live-update">
-                    <textarea #liveupdate matInput placeholder="Check connection results will appear here"
+    <mat-form-field class="status-text">
+                    <textarea #liveupdate matInput placeholder="Status"
                               formControlName="liveResults"
                               cdkAutosizeMinRows="5" readonly cdkTextareaAutosize></textarea>
     </mat-form-field>

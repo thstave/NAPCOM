@@ -63,7 +63,8 @@ export class SystemConfigService {
         UPDAPSstatustxtfname: "UPDAPS_run_status.txt",
         getUPDAPSRunStatusCmd: "checkUPDAPSrunstatus.py",
         computeSharesCmd: "computeSharesAtANL.py",
-        sendremoteCmd: "send_remote_cmd.py"
+        sendremoteCmd: "send_remote_cmd.py",
+        submitnapcomplusjobCmd: "submit_napcomplus_job.py"
 
     };
 

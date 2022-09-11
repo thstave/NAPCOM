@@ -32,6 +32,9 @@
             <!-- PYTHON Submit -->
             <mat-card class="w-auto">
                 <div class="button-wrapper d-flex justify-content-between">
+                    <button mat-flat-button color="primary" (click)="getqsum()">Get node status</button>
+                    <button mat-flat-button color="primary" (click)="submitnapcomplusjob()">Generate Inputs</button>
+
                     <button mat-flat-button color="primary" (click)="submitRun()">Submit Run</button>
                     <button mat-flat-button color="primary" (click)="computeShares()">Compute Shares</button>
 
@@ -42,8 +45,8 @@
                               cdkAutosizeMinRows="1" cdkTextareaAutosize readonly></textarea>
             </mat-form-field>
 
-            <mat-form-field class="run-live-update">
-                    <textarea #submitupdate matInput placeholder="Submit Update" formControlName="livesubmitResults"
+            <mat-form-field class="status-text">
+                    <textarea #submitupdate matInput placeholder="Status" formControlName="livesubmitResults"
                               cdkAutosizeMinRows="10" cdkTextareaAutosize readonly></textarea>
             </mat-form-field>
 
@@ -62,8 +65,8 @@
                 </div>
             </mat-card>
 
-            <mat-form-field class="run-live-update">
-                    <textarea #runstatusupdate matInput placeholder="Results" formControlName="runstatusupdateResults"
+            <mat-form-field class="status-text">
+                    <textarea #runstatusupdate matInput placeholder="Status" formControlName="runstatusupdateResults"
                               cdkAutosizeMinRows="10" cdkTextareaAutosize readonly></textarea>
             </mat-form-field>
 
@@ -87,59 +90,47 @@
 
         </mat-tab>
 
+<!--        <mat-tab label="Shell Commands">-->
+<!--            &lt;!&ndash; Shell commands &ndash;&gt;-->
 
-        <mat-tab label="Connection and Uploads">
-            <!-- ANL Settings -->
-            <mat-card>
-                <div class="button-wrapper d-flex justify-content-between">
-                    <button mat-flat-button color="primary" (click)="checkConnection()">Check Connection</button>
-                    <button mat-flat-button color="primary" (click)="uploadNapcomFiles()">Upload NAPCOM files</button>
-                    <button mat-flat-button color="primary" (click)="uploadUpdapsFiles()">Upload UPDAPS files</button>
-                </div>
-            </mat-card>
+<!--            <mat-card>-->
+<!--                <div class="display-6 text-left">Shell commands</div>-->
 
-        </mat-tab>
-        <mat-tab label="Shell Commands">
-            <!-- Shell commands -->
+<!--                <mat-form-field>-->
+<!--                    <input matInput placeholder="Command" formControlName="command">-->
+<!--                </mat-form-field>-->
 
-            <mat-card>
-                <div class="display-6 text-left">Shell commands</div>
+<!--                <mat-form-field>-->
+<!--                    <input matInput placeholder="Arguments" formControlName="args">-->
+<!--                </mat-form-field>-->
 
-                <mat-form-field>
-                    <input matInput placeholder="Command" formControlName="command">
-                </mat-form-field>
+<!--                <mat-divider [inset]="true" class="mb-4 mt-4"></mat-divider>-->
 
-                <mat-form-field>
-                    <input matInput placeholder="Arguments" formControlName="args">
-                </mat-form-field>
+<!--            </mat-card>-->
 
-                <mat-divider [inset]="true" class="mb-4 mt-4"></mat-divider>
+<!--            <mat-divider [inset]="true" class="mb-4 mt-4"></mat-divider>-->
 
-            </mat-card>
+<!--            <mat-form-field>-->
+<!--                <input matInput placeholder="Return Code" formControlName="code" readonly>-->
+<!--            </mat-form-field>-->
 
-            <mat-divider [inset]="true" class="mb-4 mt-4"></mat-divider>
+<!--            <mat-form-field>-->
+<!--                    <textarea matInput placeholder="Results" formControlName="results" cdkTextareaAutosize-->
+<!--                              cdkAutosizeMinRows="4" readonly></textarea>-->
+<!--            </mat-form-field>-->
 
-            <mat-form-field>
-                <input matInput placeholder="Return Code" formControlName="code" readonly>
-            </mat-form-field>
+<!--            <mat-form-field class="run-live-update">-->
+<!--                    <textarea #liveupdate matInput placeholder="Live Update" formControlName="liveResults"-->
+<!--                              cdkAutosizeMinRows="10" readonly></textarea>-->
+<!--            </mat-form-field>-->
 
-            <mat-form-field>
-                    <textarea matInput placeholder="Results" formControlName="results" cdkTextareaAutosize
-                              cdkAutosizeMinRows="4" readonly></textarea>
-            </mat-form-field>
+<!--            <div class="button-wrapper d-flex justify-content-between">-->
+<!--                <button mat-flat-button color="primary" (click)="runCommand()">Run</button>-->
+<!--                <button mat-flat-button color="primary" (click)="clear()">Clear</button>-->
+<!--                <button mat-flat-button color="primary" (click)="cancel()">Cancel</button>-->
+<!--            </div>-->
 
-            <mat-form-field class="run-live-update">
-                    <textarea #liveupdate matInput placeholder="Live Update" formControlName="liveResults"
-                              cdkAutosizeMinRows="10" readonly></textarea>
-            </mat-form-field>
-
-            <div class="button-wrapper d-flex justify-content-between">
-                <button mat-flat-button color="primary" (click)="runCommand()">Run</button>
-                <button mat-flat-button color="primary" (click)="clear()">Clear</button>
-                <button mat-flat-button color="primary" (click)="cancel()">Cancel</button>
-            </div>
-
-        </mat-tab>
+<!--        </mat-tab>-->
     </mat-tab-group>
 
 

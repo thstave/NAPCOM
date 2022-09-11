@@ -70,14 +70,14 @@ export class PythonConfigComponent implements OnInit {
     }
 
     uploadNapcomFiles() {
+        this.save()
+
         const fpath3 = `${<string>this.sysSvc.appConfigData.localNapcomDir}` +
             '/' + `__Status.txt`;
         // this.electronService.fs.remove(fpath);
         console.log("--> Will start watching:" + fpath3)
         this.watchstatusfile3(fpath3);
-        
-        console.log('Saving first...')
-        this.save()
+
         const command = "'" + <string>this.sysSvc.appConfigData.pythonCmd + "'";
 
         const args: string[] = [];
@@ -98,14 +98,14 @@ export class PythonConfigComponent implements OnInit {
     }
 
     uploadNapcomData() {
+        this.save()
+
         const fpath3 = `${<string>this.sysSvc.appConfigData.localNapcomDir}` +
             '/' + `__Status.txt`;
         // this.electronService.fs.remove(fpath);
         console.log("--> Will start watching:" + fpath3)
         this.watchstatusfile3(fpath3);
 
-        console.log('Saving first...')
-        this.save()
         const command = "'" + <string>this.sysSvc.appConfigData.pythonCmd + "'";
 
         const args: string[] = [];
@@ -127,6 +127,8 @@ export class PythonConfigComponent implements OnInit {
     }
 
     uploadUpdapsACFiles() {
+        this.save()
+
         const fpath3 = `${<string>this.sysSvc.appConfigData.localNapcomDir}` +
             '/' + `__Status.txt`;
         // this.electronService.fs.remove(fpath);
@@ -153,13 +155,13 @@ export class PythonConfigComponent implements OnInit {
     }
 
     uploadUpdapsPCCFiles() {
+        this.save()
 
         const fpath3 = `${<string>this.sysSvc.appConfigData.localNapcomDir}` +
             '/' + `__Status.txt`;
         // this.electronService.fs.remove(fpath);
         console.log("--> Will start watching:" + fpath3)
         this.watchstatusfile3(fpath3);
-
 
         const command = "'" + <string>this.sysSvc.appConfigData.pythonCmd + "'";
 
@@ -259,6 +261,7 @@ export class PythonConfigComponent implements OnInit {
             console.log(err);
         }
     }
+
 
     watchstatusfile3(fpath: string) {
 

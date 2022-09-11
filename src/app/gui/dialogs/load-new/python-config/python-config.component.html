@@ -1,3 +1,13 @@
+<mat-card>
+    <div class="button-wrapper d-flex justify-content-between">
+        <button mat-flat-button color="primary" (click)="uploadNapcomFiles()">Upload NAPCOM++ codes</button>
+<!--        <button mat-flat-button color="primary" (click)="uploadNapcomData()">Upload NAPCOM++ data</button>-->
+
+        <button mat-flat-button color="primary" (click)="uploadUpdapsACFiles()">Upload UPDAPSAC codes</button>
+        <button mat-flat-button color="primary" (click)="uploadUpdapsPCCFiles()">Upload UPDAPSPCC codes</button>
+    </div>
+</mat-card>
+
 <form [formGroup]="pythonForm" novalidate>
     <!--
       <mat-form-field>
@@ -49,23 +59,9 @@
         <input matInput placeholder="Remote UPDAPSPCC Directory" formControlName="remoteUpdapsPCCDir">
     </mat-form-field>
 
-
-    <mat-card>
-        <div class="button-wrapper d-flex justify-content-between">
-            <button mat-flat-button color="primary" (click)="uploadNapcomFiles()">Upload NAPCOM++ codes</button>
-            <button mat-flat-button color="primary" (click)="uploadNapcomData()">Upload NAPCOM++ data</button>
-        </div>
-
-        <div class="button-wrapper d-flex justify-content-between">
-            <button mat-flat-button color="primary" (click)="uploadUpdapsACFiles()">Upload UPDAPSAC codes</button>
-            <button mat-flat-button color="primary" (click)="uploadUpdapsPCCFiles()">Upload UPDAPSPCC codes</button>
-        </div>
-    </mat-card>
-
-    <mat-form-field class="run-live-update">
+    <mat-form-field class="status-text">
                     <textarea #liveupdate1 matInput placeholder="Status"
                               formControlName="liveResults1"
                               cdkAutosizeMinRows="5" readonly cdkTextareaAutosize></textarea>
     </mat-form-field>
-
 </form>

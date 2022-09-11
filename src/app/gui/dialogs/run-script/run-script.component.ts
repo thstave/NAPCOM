@@ -299,6 +299,84 @@ export class RunScriptComponent implements OnInit {
 
 
     }
+    getqsum() {
+
+        const fpath3 = `${<string>this.sysSvc.appConfigData.localNapcomDir}` +
+            '/' + `__Status.txt`;
+        // this.electronService.fs.remove(fpath);
+        console.log("--> Will start watching:" + fpath3)
+        this.watchstatusfile0(fpath3);
+
+        const command = "'" + <string>this.sysSvc.appConfigData.pythonCmd + "'";
+
+        const args: string[] = [];
+        args.push("'" + `${<string>this.sysSvc.appConfigData.localNapcomDir}/${<string>this.sysSvc.appConfigData.sendremoteCmd}` + "'");
+        args.push("'" + `${<string>this.sysSvc.appConfigData.anlHost}` + "'");
+        args.push("'" + `${<string>this.sysSvc.appConfigData.anlUser}` + "'");
+        args.push("'" + `${<string>this.sysSvc.appConfigData.anlNodeCluster}` + "'");
+        args.push("'" + `${<string>this.sysSvc.appConfigData.anlPwd}` + "'");
+        args.push("'qsum'");
+
+
+        console.log(command + " " + args)
+        this.runForm.patchValue({submitupdate: "Sending a command..."});
+
+        this.run(command, args);
+        // this.runremotecommand('pwd');
+
+    }
+
+
+    submitnapcomplusjob() {
+        const command = "'" + <string>this.sysSvc.appConfigData.pythonCmd + "'";
+
+        const args: string[] = [];
+        args.push("'" + `${<string>this.sysSvc.appConfigData.localNapcomDir}/${<string>this.sysSvc.appConfigData.submitnapcomplusjobCmd}` + "'");
+        args.push("'" + `${<string>this.sysSvc.appConfigData.anlHost}` + "'");
+        args.push("'" + `${<string>this.sysSvc.appConfigData.anlUser}` + "'");
+        args.push("'" + `${<string>this.sysSvc.appConfigData.anlNodeCluster}` + "'");
+        args.push("'" + `${<string>this.sysSvc.appConfigData.anlPwd}` + "'");
+        args.push("'" + `${<string>this.sysSvc.appConfigData.localNapcomDir}` + "'");
+        args.push("'" + `${<string>this.sysSvc.appConfigData.remoteNapcomDir}` + "'");
+        args.push("'" + `${<string>this.sysSvc.workingDirectory}` + "'");
+        args.push("'" + `${<string>this.sysSvc.appConfigData.fltstr}` + "'");
+        args.push("'" + `${<string>this.sysSvc.appConfigData.remotejsonfld}` + "'");
+        args.push("'" + `${<string>this.sysSvc.appConfigData.maxNumberOfRuns}` + "'");
+        args.push("'" + `${<string>this.sysSvc._appConfigFileName}` + "'");
+
+        let cumentry = command;
+        for (let entry of args) {
+            cumentry = cumentry + " " + entry;
+        }
+        console.log(cumentry)
+
+        this.runForm.patchValue({results: "Submitting job to generate input files foe UPDAPS runs"});
+
+        // this.runnolive1(command, args);
+        //
+        // //    Watch and read the status file
+        // const fpath = `${<string>this.sysSvc.workingDirectory}` +
+        //     '/' + `${<string>this.sysSvc.appConfigData.NAPCOMstatustxtfname}`;
+        // this.electronService.fs.remove(fpath);
+        // this.watchstatusfile(fpath);
+        //
+        // // const NAPCOMstatustxt = this.electronService.fs.readFileSync(fpath, 'utf-8');
+        // // this.runForm.patchValue({liveResults: NAPCOMstatustxt});
+        // // this.keepAtBottom();
+        //
+        // this.runForm.patchValue({
+        //     estimatedruntime:
+        //         "Please wait, computing (this can take several minutes)... \n"
+        // });
+        // const fpath3 = `${<string>this.sysSvc.workingDirectory}` +
+        //     '/' + `${<string>this.sysSvc.appConfigData.NAPCOMstatusremotetxtfname}`;
+        // // this.electronService.fs.remove(fpath);
+        // // this.readUPDAPSStatusfile(fpath);
+        // console.log("--> Will start watching:" + fpath3)
+        // this.watchstatusfile3(fpath3);
+
+
+    }
 
     submitRun() {
         const command = "'" + <string>this.sysSvc.appConfigData.pythonCmd + "'";
@@ -350,6 +428,54 @@ export class RunScriptComponent implements OnInit {
         // this.readUPDAPSStatusfile(fpath);
         console.log("--> Will start watching:" + fpath3)
         this.watchstatusfile3(fpath3);
+
+
+    }
+
+    watchstatusfile0(fpath: string) {
+
+        try {
+            //file exists
+            this.electronService.fs.watchFile(
+                // The name of the file to watch
+                fpath,
+                // The options parameter is used to modify the behaviour of the method
+                {
+                    // Specify the use of big integers in the Stats object
+                    bigint: false,
+
+                    // Specify if the process should continue as long as file is watched
+                    persistent: true,
+
+                    // Specify the interval between each poll the file
+                    interval: 2000,
+
+                },
+                (curr, prev) => {
+                    console.log("\nThe file was edited");
+                    // Show the time when the file was modified
+                    console.log("Previous Modified Time", prev.mtime);
+                    console.log("Current Modified Time", curr.mtime);
+
+                    const statustxt = this.electronService.fs.readFileSync(fpath, "utf8")
+
+                    console.log("The contents of the current file are:", statustxt);
+                    this.runForm.patchValue({livesubmitResults: statustxt});
+
+                    this.keepAtBottom()
+                    var idxno = statustxt.indexOf("---> DONE")
+                    console.log(idxno)
+                    if (idxno > -1) {
+                        this.electronService.fs.unwatchFile(fpath)
+                        console.log("\n> File has been stopped watching");
+
+                    }
+
+                }
+            );
+        } catch (err) {
+            console.error(err)
+        }
 
 
     }
@@ -505,66 +631,6 @@ export class RunScriptComponent implements OnInit {
         );
     }
 
-    uploadNapcomFiles() {
-        const command = "'" + <string>this.sysSvc.appConfigData.pythonCmd + "'";
-
-        const args: string[] = [];
-        args.push("'" + `${<string>this.sysSvc.appConfigData.localNapcomDir}/${<string>this.sysSvc.appConfigData.sendNapcomCmd}` + "'");
-        args.push("'" + `${<string>this.sysSvc.appConfigData.anlHost}` + "'");
-        args.push("'" + `${<string>this.sysSvc.appConfigData.anlUser}` + "'");
-        args.push("'" + `${<string>this.sysSvc.appConfigData.anlNodeCluster}` + "'");
-        args.push("'" + `${<string>this.sysSvc.appConfigData.anlPwd}` + "'");
-        args.push("'" + `${<string>this.sysSvc.appConfigData.localNapcomDir}` + "'");
-        args.push("'" + `${<string>this.sysSvc.appConfigData.remoteNapcomDir}` + "'");
-        args.push("'" + `${<string>this.sysSvc.appConfigData.napcomExt}` + "'");
-        args.push("'" + `${<string>this.sysSvc.workingDirectory}` + "'");
-
-        // console.log(command + " " + args)
-        this.runForm.patchValue({results: "--> Upload NAPCOM Files"});
-
-        this.run(command, args);
-    }
-
-    uploadUpdapsFiles() {
-        const command = "'" + <string>this.sysSvc.appConfigData.pythonCmd + "'";
-
-        const args: string[] = [];
-        args.push("'" + `${<string>this.sysSvc.appConfigData.localNapcomDir}/${<string>this.sysSvc.appConfigData.sendUpdapsCmd}` + "'");
-        args.push("'" + `${<string>this.sysSvc.appConfigData.anlHost}` + "'");
-        args.push("'" + `${<string>this.sysSvc.appConfigData.anlUser}` + "'");
-        args.push("'" + `${<string>this.sysSvc.appConfigData.anlNodeCluster}` + "'");
-        args.push("'" + `${<string>this.sysSvc.appConfigData.anlPwd}` + "'");
-        args.push("'" + `${<string>this.sysSvc.appConfigData.localUpdapsacDir}` + "'");
-        args.push("'" + `${<string>this.sysSvc.appConfigData.remoteUpdapsacDir}` + "'");
-        args.push("'" + `${<string>this.sysSvc.appConfigData.updapsacExt}` + "'");
-
-        // console.log(command + " " + args)
-        this.runForm.patchValue({results: "--> Upload UPDAPS Files"});
-
-        this.run(command, args);
-    }
-
-
-    checkConnection() {
-        const command = "'" + <string>this.sysSvc.appConfigData.pythonCmd + "'";
-
-        const args: string[] = [];
-        args.push("'" + `${<string>this.sysSvc.appConfigData.localNapcomDir}/${<string>this.sysSvc.appConfigData.checkConnectionCmd}` + "'");
-        args.push("'" + `${<string>this.sysSvc.appConfigData.anlHost}` + "'");
-        args.push("'" + `${<string>this.sysSvc.appConfigData.anlUser}` + "'");
-        args.push("'" + `${<string>this.sysSvc.appConfigData.anlNodeCluster}` + "'");
-        args.push("'" + `${<string>this.sysSvc.appConfigData.anlPwd}` + "'");
-
-        // console.log(command + " " + args)
-        this.runForm.patchValue({
-            results: "--> Check Connection:" +
-                " '" + `${<string>this.sysSvc.appConfigData.anlHost}` + "' " +
-                "'" + `${<string>this.sysSvc.appConfigData.anlUser}` + "'"
-        });
-
-        this.run(command, args);
-    }
-
 
     runCommand() {
         // Args can be entered in a comma separated list.  They need to be split and passed as an array for spawn.
@@ -654,7 +720,7 @@ export class RunScriptComponent implements OnInit {
         this.runScript.run(command, args, (dat: string) => {
 
             // Callback updates live results
-            const patchVal = <string>this.runForm.value["liveResults"] + dat;
+            const patchVal = <string>this.runForm.value["submitupdate"] + dat;
             this.runForm.patchValue({liveResults: patchVal});
             this.keepAtBottom();
 
